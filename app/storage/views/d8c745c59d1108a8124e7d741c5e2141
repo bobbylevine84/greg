@@ -1,0 +1,199 @@
+<!-- Account Rep Menu -->
+<?php if($myApp->utype == 'ACCREP'): ?>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('accountrep.myaccount')); ?>">
+      <i class="fa fa-sign-in"></i> <span>My Account</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+<?php endif; ?>
+<!-- /.Account Rep Menu -->
+
+<!-- Inside Sales Menu -->
+<?php if($myApp->utype == 'INTSALES'): ?>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('insidesales.myaccount')); ?>">
+      <i class="fa fa-sign-in"></i> <span>My Account</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+  <!-- Inside Sales -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('insidesales.index')); ?>">
+      <i class="fa fa-male"></i> <span>Inside Sales Team</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('insidesales.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+    </ul>
+  </li>
+
+  <!-- Account Rep -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('accountrep.index')); ?>">
+      <i class="fa fa-male"></i> <span>Account Rep</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('accountrep.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('accountrep.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+<?php endif; ?>
+<!-- /.Inside Sales Menu -->
+
+<!-- Superadmin Menu -->
+<?php if($myApp->isSU): ?>
+
+  <!-- Inside Sales -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('insidesales.index')); ?>">
+      <i class="fa fa-male"></i> <span>Inside Sales Team</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('insidesales.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('insidesales.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Account Rep -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('accountrep.index')); ?>">
+      <i class="fa fa-male"></i> <span>Account Rep</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('accountrep.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('accountrep.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+<?php endif; ?>
+<!-- /.Superadmin Menu -->
+
+  <li class="header">All Menus</li>
+
+  <!-- My Account Section -->
+  <li class="active">
+    <a href="<?php echo e(URL::route('insidesales.myaccount')); ?>">
+      <i class="fa fa-sign-in"></i> <span>My Account</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('varacc.myaccount')); ?>">
+      <i class="fa fa-sign-in"></i> <span>My Account</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('account.myaccount')); ?>">
+      <i class="fa fa-sign-in"></i> <span>My Account</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+  <!-- End of My Account Section -->
+
+  <!-- Inside Sales -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('insidesales.index')); ?>">
+      <i class="fa fa-male"></i> <span>Inside Sales Team</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('insidesales.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <?php if($myApp->isSU): ?>
+        <li><a href="<?php echo e(URL::route('insidesales.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+      <?php endif; ?>
+    </ul>
+  </li>
+
+  <!-- VAR Account -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('varacc.index')); ?>">
+      <i class="fa fa-users"></i> <span>VAR Accounts</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('varacc.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('varacc.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Customer Account -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('customer.index')); ?>">
+      <i class="fa fa-users"></i> <span>Customer Accounts</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('customer.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('customer.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Account On-boarding -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('onboarding.index')); ?>">
+      <i class="fa fa-users"></i> <span>On-Boarding</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('onboarding.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('onboarding.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+
+<?php if($myApp->isSU): ?>
+
+  <!-- Account Rep -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('accountrep.index')); ?>">
+      <i class="fa fa-male"></i> <span>Account Rep</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('accountrep.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('accountrep.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Account -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('account.index')); ?>">
+      <i class="fa fa-users"></i> <span>Accounts</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('account.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('account.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- On-Boarding -->
+  <li class="active">
+    <a href="<?php echo e(URL::route('onboarding.index')); ?>">
+      <i class="fa fa-info-circle"></i> <span>Account On-Boarding</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+  <?php else: ?>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('onboarding.open')); ?>">
+      <i class="fa fa-info-circle"></i> <span>Account On-Boarding</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+<?php endif; ?>

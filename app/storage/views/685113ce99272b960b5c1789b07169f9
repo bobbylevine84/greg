@@ -1,0 +1,74 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+  <!-- sidebar menu: : style can be found in sidebar.less -->
+  <ul class="sidebar-menu">
+    <li class="header">MAIN NAVIGATION</li>
+
+    <?php if($myApp->isSU): ?>
+      <li class="treeview active">
+        <a href="<?php echo e(URL::route('fanapp.index')); ?>">
+          <i class="fa fa-mobile"></i> <span>Fan Apps</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="<?php echo e(URL::route('fanapp.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+          <li><a href="<?php echo e(URL::route('fanapp.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview active">
+        <a href="<?php echo e(URL::route('account.index')); ?>">
+          <i class="fa fa-users"></i> <span>Accounts</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="<?php echo e(URL::route('account.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+          <li><a href="<?php echo e(URL::route('account.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+        </ul>
+      </li>
+
+      <?php else: ?>
+
+      <li class="active">
+        <a href="<?php echo e(URL::route('myapp.show')); ?>">
+          <i class="fa fa-sign-in"></i> <span>My App</span>
+          <i class="fa pull-right"></i>
+        </a>
+      </li>
+
+      <li class="active">
+        <a href="<?php echo e(URL::route('account.myaccount')); ?>">
+          <i class="fa fa-sign-in"></i> <span>My Account</span>
+          <i class="fa pull-right"></i>
+        </a>
+      </li>
+
+    <?php endif; ?>
+
+      <li class="treeview active">
+        <a href="<?php echo e(URL::route('menu.index')); ?>">
+          <i class="fa fa-list-ol"></i> <span>Menus</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="<?php echo e(URL::route('menu.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+          <li><a href="<?php echo e(URL::route('menu.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+        </ul>
+      </li>
+
+    <!-- @ if(!$myApp->isSU) -->
+      <li class="treeview active">
+        <a href="<?php echo URL::route('post.index'); ?>">
+          <i class="fa fa-file"></i> <span>Posts</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="<?php echo URL::route('post.index'); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+          <li><a href="<?php echo URL::route('post.create'); ?>"><i class="fa fa-plus"></i> Create</a></li>
+        </ul>
+      </li>
+    <!-- @ endif -->
+
+  </ul>
+</section>
+<!-- /.sidebar -->

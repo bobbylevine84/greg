@@ -1,0 +1,61 @@
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> My Account <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title"> My Account Details </h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <!-- text input -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Name</label>
+                <span class="form-control" disabled><?php echo $record->display_name; ?></span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>User Name</label>
+                <span class="form-control" disabled><?php echo $record->username; ?></span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Group ID</label>
+                <span class="form-control" disabled><?php echo $record->groupid; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="box-footer" style="padding: 10px 15px;">
+              <input value=" Change Password " name="btnCPswd" class="btn" type="button" onclick="window.location.href='<?php echo URL::to('account/changepassword'); ?>'" />
+            </div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /search form -->
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,23 @@
+<ul class="box f-right">
+  <!-- <li><a href="#"><span><strong>Visit Site &raquo;</strong></span></a></li> -->
+</ul>
+<ul class="box">
+	<?php if($myApp->isSU): ?>
+		<li><a href="<?php echo URL::to('group/index'); ?>"><span>Groups</span></a></li>
+		<li><a href="<?php echo URL::to('account/index'); ?>"><span>Accounts</span></a></li>
+		<li><a href="<?php echo URL::to('appuser/index'); ?>"><span>App Users</span></a></li>
+	<?php else: ?>
+		<li><a href="<?php echo URL::to('account/myaccount'); ?>"><span>My Account</span></a></li>
+		<li><a href="<?php echo URL::to('appuser/groupusers'); ?>"><span>Group Users</span></a></li>
+	<?php endif; ?>
+  <!-- Active -->
+
+<!--   <li id="menu-active"><a href="#"><span>Lorem ipsum</span></a></li>
+  <li><a href="#"><span>Lorem ipsum</span></a></li>
+  <li><a href="#"><span>Lorem ipsum</span></a></li>
+  <li><a href="#"><span>Lorem ipsum</span></a></li>
+  <li><a href="#"><span>Lorem ipsum</span></a></li>
+  <li><a href="#"><span>Lorem ipsum</span></a></li>
+  <li><a href="#"><span>Lorem ipsum</span></a></li>
+ -->
+</ul>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Adminizio Liteee</title>
+
+    <?php echo $__env->make('includes.login_head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</head>
+<body>
+<div id="main">
+  <!-- Tray -->
+  <div id="tray" class="box">
+	<?php echo $__env->make('includes.login_toptray', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  </div>
+  <!--  /tray -->
+  <hr class="noscreen" />
+  <!-- Menu -->
+  <div id="menu" class="box">
+	<?php echo $__env->make('includes.login_topmenu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  </div>
+  <!-- /header -->
+  <hr class="noscreen" />
+  <!-- Columns -->
+  <div id="cols" class="box login-box">
+    <hr class="noscreen" />
+    <!-- Content (Right Column) -->
+    <div id="content" class="box">
+		<?php echo $__env->yieldContent('content'); ?>
+	</div>
+    <!-- /content -->
+  </div>
+  <!-- /cols -->
+  <hr class="noscreen" />
+  <!-- Footer -->
+  <div id="footer" class="box">
+    <?php echo $__env->make('includes.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  </div>
+  <!-- /footer -->
+</div>
+<!-- /main -->
+</body>
+</html>

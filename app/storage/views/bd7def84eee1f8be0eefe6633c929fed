@@ -1,0 +1,109 @@
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, res) {
+        return res;
+      }
+    });
+
+  });
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Menu <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Edit Menu</h3> &nbsp; (<small><span class="fa fa-star red"> required field</span></small>)
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <?php echo Form::model( $record,  array('id' => 'frmRecord', 'route' => ['menu.update', $record->menu_id], 'method' => 'post', 'files' => true) ); ?>
+
+            <!-- text input -->
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Fan App &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                <?php if($myApp->isSU): ?>
+                  <?php echo Form::select('app_id', $fanapps, null, ['id' => 'app_id', 'placeholder' => 'Select App', 'class' => 'form-control validate[required]']); ?>
+
+                <?php else: ?>
+                  <span class="form-control" disabled><?php echo $selapp; ?></span>
+                <?php endif; ?>
+                <?php echo $errors->first('app_id', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Menu Title &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('menu_title', null, ['id' => 'menu_title', 'placeholder' => 'Menu Title', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('menu_title', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Display Order &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('menu_order', null, ['id' => 'menu_order', 'placeholder' => 'Display Order', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('menu_order', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Menu Image</label> &nbsp; <input type="checkbox" name="chkRemove" value="1"/> Remove
+                <br/>
+                <img src="<?php echo $menu_image; ?>" style="max-width:200px;" />
+                <br/>
+                <?php echo Form::file('menu_image', ['id' => 'menu_image']); ?>
+
+                <?php echo $errors->first('menu_image', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="box-footer" style="padding: 10px 15px;">
+
+              <?php echo Form::submit('  Save  ', ['id' => 'btnSave', 'name' => 'btnSave', 'class' => 'btn btn-primary']); ?> &nbsp; 
+              <input value=" Exit " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('menu.index'); ?>'" />
+            </div>
+
+          <?php echo Form::close(); ?>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /search form -->
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

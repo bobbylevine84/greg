@@ -1,0 +1,8 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteBase /var/www/html/laravel/larablog/
+RewriteRule ^(admin|public|api|emails|preconfig)($|/) - [L]
+RewriteRule ^ index.php [L]

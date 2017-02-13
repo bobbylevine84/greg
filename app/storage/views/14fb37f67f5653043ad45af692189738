@@ -1,0 +1,733 @@
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, res) {
+        return res;
+      }
+    });
+
+    // styled checkboxes
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].square-red, input[type="radio"].square-red').iCheck({
+      checkboxClass: 'icheckbox_square-red',
+      radioClass: 'iradio_square-red'
+    });
+
+    // inv_email
+
+
+    // handle invoice same as billing checkbox
+    var inv_eq_bill = '<?php echo $record->inv_eq_bill; ?>';
+    if(inv_eq_bill == '1') {
+      $('#inv_eq_bill').iCheck('check');
+      $('.cpbill').attr('readonly', true);
+    }
+    else {
+      $('#inv_eq_bill').iCheck('uncheck');
+      $('.cpbill').attr('readonly', false);
+    }
+
+    // handle credit card applicable checkbox
+    var has_cc = '<?php echo $record->has_cc; ?>';
+    if(has_cc == '1') {
+      $('#has_cc').iCheck('check');
+      $('.cpcc').attr('readonly', false);
+    }
+    else {
+      $('#has_cc').iCheck('uncheck');
+      $('.cpcc').attr('readonly', true);
+    }
+
+    // handle accept eft radios
+    var accept_eft = '<?php echo $record->accept_eft; ?>';
+    if(accept_eft == '1') {
+      $('#accept_eft_1').iCheck('check');
+      $('.accinfo').attr('readonly', false);
+    }
+    else {
+      $('#accept_eft_0').iCheck('check');
+      $('.accinfo').attr('readonly', true);
+    }
+
+    // handle email inv radios
+    var email_inv = '<?php echo $record->email_inv; ?>';
+    if(email_inv == '1') {
+      $('#email_inv_1').iCheck('check');
+      $('.inv_email').attr('readonly', false);
+    }
+    else {
+      $('#email_inv_0').iCheck('check');
+      $('.inv_email').attr('readonly', true);
+    }
+
+    // handle multiple invoices radios
+    var proc_multi_inv = '<?php echo $record->proc_multi_inv; ?>';
+    if(proc_multi_inv == '1') $('#proc_multi_inv_1').iCheck('check');
+    else $('#proc_multi_inv_0').iCheck('check');
+
+    // handle order via email radios
+    var order_via_email = '<?php echo $record->order_via_email; ?>';
+    if(order_via_email == '1') $('#order_via_email_1').iCheck('check');
+    else $('#order_via_email_0').iCheck('check');
+
+
+  });
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('hassets'); ?>
+  <!-- For iCheckbox -->
+  <?php echo HTML::style('public/plugins/iCheck/all.css', array('type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footscripts'); ?>
+  <!-- iCheck 1.0.1 -->
+  <?php echo HTML::script('public/plugins/iCheck/icheck.min.js', array('type' => 'text/javascript')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Account On-Boarding <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <?php echo Form::model( $record, array('id' => 'frmRecord', 'method' => 'get') ); ?>
+
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">On-Boarding Information</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          
+        </div><!-- /.box-body -->
+
+        <!-- text input -->
+
+        <!-- Billing -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Billing</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1</label>
+              <span class="form-control"><?php echo $record->bill_addr1; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2</label>
+              <span class="form-control"><?php echo $record->bill_addr2; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3</label>
+              <span class="form-control"><?php echo $record->bill_addr3; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City</label>
+              <span class="form-control"><?php echo $record->bill_city; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State</label>
+              <span class="form-control"><?php echo $record->bill_state; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip</label>
+              <span class="form-control"><?php echo $record->bill_zip; ?></span>
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Billing -->
+
+        <!-- Invoicing -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Invoicing </h3> &nbsp; 
+          <!-- <?php echo Form::checkbox('inv_eq_bill', '1', null, [ 'id' => 'inv_eq_bill', 'class' => 'square-red' ]); ?> -->
+          <input type="checkbox" name="inv_eq_bill" id="inv_eq_bill" value="1" class="square-red" disabled /> Check if same as Billing
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1</label>
+              <span class="cpbill form-control"><?php echo $record->inv_addr1; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2</label>
+              <span class="cpbill form-control"><?php echo $record->inv_addr2; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3</label>
+              <span class="cpbill form-control"><?php echo $record->inv_addr3; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City</label>
+              <span class="cpbill form-control"><?php echo $record->inv_city; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State</label>
+              <span class="cpbill form-control"><?php echo $record->inv_state; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip</label>
+              <span class="cpbill form-control"><?php echo $record->inv_zip; ?></span>
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Invoicing -->
+
+        <!-- Credit Card -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Credit Card </h3> &nbsp; 
+          <input type="checkbox" name="has_cc" id="has_cc" value="1" class="square-red" disabled /> Check if applicable
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name on Card</label>
+              <span class="cpcc form-control"><?php echo $record->cc_name_on_cc; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>CC#</label>
+              <span class="cpcc form-control"><?php echo $record->cc_no; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>CC Billing Address</label>
+              <span class="cpcc form-control"><?php echo $record->cc_bill_addr; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City</label>
+              <span class="cpcc form-control"><?php echo $record->cc_city; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State</label>
+              <span class="cpcc form-control"><?php echo $record->cc_state; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip</label>
+              <span class="cpcc form-control"><?php echo $record->cc_zip; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone#</label>
+              <span class="cpcc form-control"><?php echo $record->cc_phone; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>CVC Number</label>
+              <span class="cpcc form-control"><?php echo $record->cc_cvc_no; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Receipt Email</label>
+              <span class="cpcc form-control"><?php echo $record->cc_email; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Expiry <small style="font-weight:normal;">(Month / Year)</small></label>
+              <span class="cpcc form-control"><?php echo $record->cc_exp_mm != '' ? $record->cc_exp_mm . '/' .  $record->cc_exp_yy : ''; ?></span>
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Credit Card -->
+
+        <!-- Purchasing Primary Contact -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Purchasing Primary Contact</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name</label>
+              <span class="form-control"><?php echo $record->pur_prim_name; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <span class="form-control"><?php echo $record->pur_prim_phone; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Email(s)</label>
+              <span class="form-control"><?php echo $record->pur_prim_emails; ?></span>
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Purchasing Primary Contact -->
+
+        <!-- Authorized Purchasers Contacts -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Authorized Purchasers Contacts</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-12"><h4>Contact One</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name</label>
+              <span class="form-control"><?php echo $record->auth_pur1_name; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <span class="form-control"><?php echo $record->auth_pur1_phone; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <span class="form-control"><?php echo $record->auth_pur1_email; ?></span>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-12"><h4>Contact Two</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name</label>
+              <span class="form-control"><?php echo $record->auth_pur2_name; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <span class="form-control"><?php echo $record->auth_pur2_phone; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <span class="form-control"><?php echo $record->auth_pur2_email; ?></span>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-12"><h4>Contact Three</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name</label>
+              <span class="form-control"><?php echo $record->auth_pur3_name; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <span class="form-control"><?php echo $record->auth_pur3_phone; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <span class="form-control"><?php echo $record->auth_pur3_email; ?></span>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Authorized Purchasers Contacts -->
+
+        <!-- Primary Shipping Address -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Primary Shipping Address</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1</label>
+              <span class="form-control"><?php echo $record->prim_ship_addr1; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2</label>
+              <span class="form-control"><?php echo $record->prim_ship_addr2; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3</label>
+              <span class="form-control"><?php echo $record->prim_ship_addr3; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City</label>
+              <span class="form-control"><?php echo $record->prim_ship_city; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State</label>
+              <span class="form-control"><?php echo $record->prim_ship_state; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip</label>
+              <span class="form-control"><?php echo $record->prim_ship_zip; ?></span>
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Primary Shipping Address -->
+
+        <!-- Secondary Shipping Address -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Secondary Shipping Address</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1</label>
+              <span class="form-control"><?php echo $record->sec_ship_addr1; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2</label>
+              <span class="form-control"><?php echo $record->sec_ship_addr2; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3</label>
+              <span class="form-control"><?php echo $record->sec_ship_addr3; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City</label>
+              <span class="form-control"><?php echo $record->sec_ship_city; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State</label>
+              <span class="form-control"><?php echo $record->sec_ship_state; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip</label>
+              <span class="form-control"><?php echo $record->sec_ship_zip; ?></span>
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Secondary Shipping Address -->
+
+        <!-- Payments, Taxes, and Invoicing -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Payments, Taxes, and Invoicing</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Tax ID #</label>
+              <span class="form-control"><?php echo $record->tax_id_no; ?></span>
+            </div>
+          </div>
+
+          <!-- <div class="col-md-12">
+            <label>Please indicate if you will accept EFT payments to E2E. If so, bank account information will be supplied upon confirmation.</label>
+            <div class="col-md-3">
+              <div class="form-group">
+                <input type="checkbox" name="qwe" value="1" class="square-red" /> &nbsp; Yes
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <input type="checkbox" name="asd" value="0" class="square-red" /> &nbsp; No
+              </div>
+            </div>
+          </div> -->
+
+          <div class="col-md-12">
+            <label>Please indicate if you will accept EFT payments to E2E. If so, bank account information will be supplied upon confirmation.</label>
+            <div class="form-group">
+              <input type="radio" name="accept_eft" id="accept_eft_1" value="1" class="square-red rd_accinfo" disabled /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="accept_eft" id="accept_eft_0" value="0" class="square-red rd_accinfo" disabled /> No
+            </div>
+          </div>
+
+          <div class="col-md-12"><h4>Bank Account Information</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Name</label>
+              <span class="accinfo form-control"><?php echo $record->eft_bank_name; ?></span>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Address 1</label>
+              <span class="accinfo form-control"><?php echo $record->eft_bank_addr1; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Address 2</label>
+              <span class="accinfo form-control"><?php echo $record->eft_bank_addr2; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank City</label>
+              <span class="accinfo form-control"><?php echo $record->eft_bank_city; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank State</label>
+              <span class="accinfo form-control"><?php echo $record->eft_bank_state; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Routing</label>
+              <span class="accinfo form-control"><?php echo $record->bill_addr1; ?></span>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Name</label>
+              <span class="accinfo form-control"><?php echo $record->eft_acc_name; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Number</label>
+              <span class="accinfo form-control"><?php echo $record->eft_acc_no; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Can invoices and credit card receipts be emailed?</label> 
+            <div class="form-group">
+              <input type="radio" name="email_inv" id="email_inv_1" value="1" class="square-red" disabled /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="email_inv" id="email_inv_0" value="0" class="square-red" disabled /> No
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <span class="inv_email form-control"><?php echo $record->email_inv_to; ?></span>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Can multiple invoices be processed in single credit card transaction?</label> 
+            <div class="form-group">
+              <input type="radio" name="proc_multi_inv" id="proc_multi_inv_1" value="1" class="square-red" disabled /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="proc_multi_inv" id="proc_multi_inv_0" value="0" class="square-red" disabled /> No
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Can E2E take orders via email?</label> 
+            <div class="form-group">
+              <input type="radio" name="order_via_email" id="order_via_email_1" value="1" class="square-red" disabled /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="order_via_email" id="order_via_email_0" value="0" class="square-red" disabled /> No
+            </div>
+          </div>
+
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Other Notes</label> 
+              <span class="form-control" style="height:auto; min-height:100px;"><?php echo nl2br($record->other_notes); ?></span>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Payments, Taxes, and Invoicing -->
+
+        <!-- Contact -->
+        <div class="box-header with-border">
+          <h3 class="box-title">E2E Customer Service, Orders, and Account Receivables</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <h4>End 2 End Technologies HQ</h4>
+              <h4>60 Sycamore Street West</h4>
+              <h4>St. Paul, MN  55117</h4>
+              <h4><a href="http://www.e2etechinc.com" target="_blank">http://www.e2etechinc.com</a></h4>
+              <h4>Phone: 651-560-0321</h4>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <h4 class="hidden-md hidden-lg">&nbsp;</h4>
+              <h4>End 2 End Technologies Warehouse</h4>
+              <h4>1017 South Kansas Avenue</h4>
+              <h4>Liberal, Kansas 67901</h4>
+              <h4><a href="mailto:orders@e2etechinc.com" target="_blank">orders@e2etechinc.com</a></h4>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Contact -->
+
+
+
+
+
+        <div class="box-body">
+
+          <div class="box-footer" style="padding: 10px 15px;">
+
+              <input value=" Back " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('onboarding.index'); ?>'" />
+          </div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /search form -->
+      <?php echo Form::close(); ?>
+
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

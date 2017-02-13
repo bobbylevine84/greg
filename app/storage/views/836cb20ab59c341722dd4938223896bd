@@ -1,0 +1,25 @@
+<table class="table table-bordered table-striped no-margin">
+  <caption><b>List &nbsp; <span id="refresh-list" class="fa fa-refresh icon-action" title="Refresh"></span></b></caption>
+  <tr>
+    <th width="20%">#</th>
+    <th width="45%">Date Time</th>
+    <th width="35%" align="center">Network?</th>
+  </tr>
+</table>
+
+<div id="location-scroll">
+
+  <table class="table table-bordered table-striped table-hover no-margin" id="tblloc-list">
+
+    <?php $k = 1; ?>
+    <?php foreach($locations as $loc): ?>
+      <tr data-rid="<?php echo $loc->rec_id; ?>" class="loc-list-item" title="View Details">
+        <td width="20%"><?php echo $k; ?></td>
+        <td width="45%"><?php echo $loc->time_stamp; ?></td>
+        <td width="35%" align="center"><?php echo $loc->net_connect; ?></td>
+      </tr>
+    <?php $k++; ?>
+    <?php endforeach; ?>
+
+  </table>
+</div>

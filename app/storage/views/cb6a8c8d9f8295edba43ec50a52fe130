@@ -1,0 +1,177 @@
+<!-- ./ Superadmin Menu -->
+<?php if($myApp->isSU): ?>
+  <!-- Master Data -->
+  <li class="treeview <?php echo $menu=='masterdata' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Master Data</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('masterdata.vendormodelfeature')); ?>"><i class="fa fa-list-ul"></i> Model Features</a></li>
+      <li><a href="<?php echo e(URL::route('masterdata.carriermodelfeature')); ?>"><i class="fa fa-plus"></i> Carrier Features</a></li>
+    </ul>
+  </li>
+
+  <!-- Customer -->
+  <li class="treeview <?php echo $menu=='customer' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Customer</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('customer.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('customer.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Vendor -->
+  <li class="treeview <?php echo $menu=='vendor' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Vendor</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('vendors.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('vendors.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Vendor Model -->
+  <li class="treeview <?php echo $menu=='vmodel' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Vendor Model</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('vendormodel.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('vendormodel.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Carrier -->
+  <li class="treeview <?php echo $menu=='carrier' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Carrier</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('carrier.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('carrier.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Carrier Model -->
+  <li class="treeview <?php echo $menu=='cmodel' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Carrier Model</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('carriermodel.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('carriermodel.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+<?php endif; ?>
+<!-- ./ Superadmin Menu -->
+
+<!-- Customer admin Menu -->
+<?php if($myApp->isCustAdmin): ?>
+
+  <!-- Group -->
+  <li class="treeview <?php echo $menu=='group' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Group</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('groups.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('groups.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- User -->
+  <li class="treeview <?php echo $menu=='user' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>User</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('user.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('user.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Company -->
+  <li class="treeview <?php echo $menu=='company' ? 'active' : ''; ?>">
+    <a href="<?php echo e(URL::route('customer.company')); ?>">
+      <i class="fa fa-male"></i> <span>Company Information</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+  </li>
+
+  <!-- Radio Inventory -->
+  <li class="treeview <?php echo $menu=='radioinv' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Radio Inventory</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('radioinventory.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('radioinventory.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+      <li><a href="<?php echo e(URL::route('radioinventory.importfromfile')); ?>"><i class="fa fa-upload"></i> Import</a></li>
+    </ul>
+  </li>
+
+  <!-- Carrier Inventory -->
+  <li class="treeview <?php echo $menu=='carrierinv' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Carrier Inventory</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('carrierinventory.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('carrierinventory.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+      <li><a href="<?php echo e(URL::route('carrierinventory.importfromfile')); ?>"><i class="fa fa-upload"></i> Import</a></li>
+    </ul>
+  </li>
+
+  <!-- Templates -->
+  <li class="treeview <?php echo $menu=='template' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Template</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('templates.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('templates.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Provision -->
+  <li class="treeview <?php echo $menu=='provision' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Provisioning</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('provision.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('provision.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- Reports -->
+  <li class="treeview <?php echo $menu=='report' ? 'active' : ''; ?>">
+    <a href="#">
+      <i class="fa fa-male"></i> <span>Report</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('report.radioinventory')); ?>"><i class="fa fa-list-ul"></i> Radio Inventory</a></li>
+      <li><a href="<?php echo e(URL::route('report.carrierinventory')); ?>"><i class="fa fa-list-ul"></i> Carrier Inventory</a></li>
+      <li><a href="<?php echo e(URL::route('report.groups')); ?>"><i class="fa fa-list-ul"></i> Groups</a></li>
+      <li><a href="<?php echo e(URL::route('report.user')); ?>"><i class="fa fa-list-ul"></i> User</a></li>
+    </ul>
+  </li>
+
+<?php endif; ?>
+<!-- Customer admin Menu -->

@@ -1,0 +1,289 @@
+/* WRITE YOUR CSS CODE HERE */
+.clr{clear: both;}
+.wd100pr {width: 100%;}
+.validation-error{
+	display: block;
+	color: #F00932;
+	font-weight: bold;
+}
+
+#map-canvas {height: 200px; width: 100%; border: 1px solid #CCC; }
+
+.icon-action{cursor: pointer !important;}
+.red {color: #DD4B39;}
+.green {color: #00A65A;}
+.white {color: #FFF;}
+.yellow {color: #FFF000;}
+.orange {color: #F39C12;}
+/*.lblue {color: #3C8DBC;}*/
+.lblue {color: #C9252C;}
+.e2e {color: #C9252C;}
+
+.img-action {cursor: pointer; width: 16px; height: 16px;}
+.img-action:hover {}
+
+.left-tit{font-size: 20px; border-bottom: 2px solid black;}
+.input-req::after{content: " *"; color: #f00;}
+
+#locdetail-loader, #loclist-loader{
+	position: absolute;
+	margin-left: -15px;
+	margin-top: -15px;
+	top: 50%;
+	left: 50%;
+	display: none;
+}
+
+#location-details {
+	position: relative;
+	height: auto;
+	/*border: 1px solid #CCC;
+	padding: 10px 5px;*/
+	margin: 0px;
+}
+
+#location-scroll {
+	overflow-x: hidden;
+	max-height: 480px;
+	/*border: 1px solid #CCC;
+	padding: 10px 5px;*/
+	margin: 0 1px 0 0;
+}
+
+#loclist-heading:hover {
+	border: none;
+	background-color: #fff;
+}
+
+#loclist-heading th {
+	/*border-right: 1px solid #0074B3 !important;*/
+	background-color: #0085CC !important;
+	color: #FFF !important;
+}
+
+/*#location-scroll tr.bg td {border: 2px solid #E8F6FF !important;}*/
+
+#location-scroll tr.selected, #location-scroll tr:hover {
+	cursor: pointer;
+	border: 1px solid #BBDF8D;
+	background-color: #EAF7D9;
+}
+
+.deviceinfo-item{ width: 33%; display: inline-block;}
+.deviceinfo-label{width: 45%; float: left; font-weight: bold;}
+.deviceinfo-data{ width: 50%; float: right;}
+
+.btn-bool-badge {
+	/*padding: 3%;*/
+	width: 100%;
+	text-align: left;
+	background-color: #fff;
+	border-radius: 2px;
+	border-color: #D2D6DE;
+	cursor: default !important;
+	opacity: 1 !important;
+}
+.btn-true {
+	/*border: 2px solid #00A65A;*/
+}
+.btn-true .badge {
+	color: #fff;
+	background-color: #00A65A;
+}
+
+.btn-false {
+	/*border: 2px solid #DD4B39;*/
+}
+.btn-false .badge {
+	color: #fff;
+	background-color: #DD4B39;
+}
+
+.btn-default {
+	/*border: 2px solid #A9A9A9;
+	background-color: #FEEBEB;*/
+}
+.btn-default .badge {
+	color: #fff;
+	background-color: #A9A9A9;
+}
+
+.box-body h4.sub-head {
+	background-color: #F8F8FF;
+	padding: 10px;
+}
+
+/* PAGINATION STYLES */
+/*
+div.pagination-wrapper{text-align: center;}
+ul.pagination{display: inline-block;}
+ul.pagination li {display:inline; padding: 5px 5px;}
+ul.pagination li a {}
+
+ul.pagination li:first-child a, ul.pagination li:first-child span {
+    border-left-width: 1px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+ul.pagination li:last-child a, ul.pagination li:last-child span {
+    border-right-width: 1px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+ul.pagination li a, ul.pagination li span {
+	float: left;
+	padding: 4px 12px;
+	line-height: 20px;
+	text-decoration: none;
+	background-color: #FFF;
+	border-width: 1px 1px 1px 0px;
+	border-style: solid;
+	border-color: #DDD;
+	-moz-border-top-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	border-image: none;
+}
+ul.pagination li.active {}
+ul.pagination li.active span {}
+*/
+/* END PAGINATION STYLES */
+
+.box-header { background-color: rgba(241, 241, 241, 0.5);}
+.table tr th {
+	background-color: #C9252C;
+	color: #fff;
+}
+
+/* nav menu */
+.nav > li > a {display: inline-block;}
+
+/* FPR E2E TECHNOLOGIES 150526 */
+.btn-default, .btn-primary {
+	background-color: #C9252C !important;
+	border-color: #C9252C !important;
+	color: #FFF !important;
+}
+
+.btn-default:hover, .btn-primary:hover {
+	background-color: #005580 !important;
+	border-color: #005580 !important;
+}
+
+h1, h2, h3, h4 {
+	color: #C9252C;
+}
+.icon-action:hover{
+	color: #005580;
+}
+
+#img-logo {max-width: 70%;}
+small.logo-text {font-size: 75%; display: block; padding-top: 5%;}
+.top-msg{
+	display: none;
+}
+
+.icheckbox_square-red.checked.disabled {
+    background-position: -48px 0px !important;
+}
+.iradio_square-red.checked.disabled {
+    background-position: -168px 0px !important;
+}
+/* HEADER LOGO */
+.main-header .logo {
+	line-height: 50px;
+}
+/*
+@media (max-width: 767px) {
+	.main-header .logo {
+		line-height: 50px;
+	}
+}
+@media (min-width: 768px) {
+	.main-header .logo {
+		line-height: 25px;
+	}
+}
+*/
+/* END HEADER LOGO */
+.visible-480 {display: none;}
+@media (max-width: 480px) {
+	.visible-480 {
+		display: block !important;
+	}
+}
+.ha {height: auto;}
+.hide-me{ display: none; }
+
+.bu-loader-spinner {
+	/*background: url('../img/custom/spinner.gif') no-repeat;*/
+	background: url('../img/custom/white-loading.gif') no-repeat;
+	padding-left: 25px;
+}
+.prov-released {
+	background-color: #FDD4D5 !important;
+}
+.orderable {
+	text-decoration: underline;
+	cursor: pointer;
+}
+.popover-close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 0;
+    color: #fff;
+    padding-top: 7px;
+}
+.popover-title {
+    padding: 10px 10px;
+    margin: 0px;
+    font-size: 14px;
+    background-color: #C9252C;
+    border-bottom: 1px solid #ebebeb;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
+    font-weight: bold;
+}
+.popover {
+	max-width: 100%;
+}
+iframe.mypopover-content {
+	border: none;
+	padding: 0px;
+	width: 100%;
+    /*height: 235px;*/
+    height: 100%;
+    min-height: 300px;
+}
+.ajaxpage.wrapper {
+	border: none;
+}
+.ajaxpage.wrapper .content-wrapper {
+	margin-left: 0px;
+	min-height: 1px !important;
+}
+iframe[seamless]{
+    background-color: transparent;
+    border: 0px none transparent;
+    padding: 0px;
+    overflow: hidden;
+}
+.popover-loader {
+    width: 400px;
+    height: 235px;
+    padding-top: 20%;
+    padding-left: 46%;
+    font-size: 220%;
+}
+.box.box-solid.box-primary {
+    border: 1px solid #C9252C;
+}
+.family-wrapper {
+    box-shadow: none;
+    padding-top: 10px;
+    border: 1px dashed #C9252C !important;
+}

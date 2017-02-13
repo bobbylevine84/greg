@@ -1,0 +1,115 @@
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, res) {
+        return res;
+      }
+    });
+
+  });
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('hassets'); ?>
+  <!-- bootstrap wysihtml5 - text editor -->
+  <?php echo HTML::style('public/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css', array('type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+  <?php echo HTML::style('public/plugins/bootstrap-wysihtml5/stylesheet.css', array('type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Post <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">View Post</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <?php echo Form::model( $record, array('id' => 'frmRecord', 'method' => 'get') ); ?>
+
+            <!-- text input -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Post Title</label>
+                <span class="form-control"><?php echo $record->post_title; ?></span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Menu</label>
+                <span class="form-control"><?php echo $record->menu->menu_title; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Post Body</label>
+                <span class="form-control" style="height:auto;"><?php echo nl2br($record->post_body); ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Featured Image</label>
+                <br/>
+                <img src="<?php echo $feature_image; ?>" style="max-width:200px;" />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Published?</label>
+                <span class="form-control"><?php echo $record->is_published == '1' ? 'Yes' : 'No'; ?></span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Display Order</label>
+                <span class="form-control"><?php echo $record->post_order; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="box-footer" style="padding: 10px 15px;">
+
+              <input value=" Back " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('post.index'); ?>'" />
+            </div>
+
+          <?php echo Form::close(); ?>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /search form -->
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

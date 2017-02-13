@@ -1,0 +1,50 @@
+  <div class="padding box">
+	<h3 class="left-tit">Menu</h3>
+  </div>
+  <!-- /padding -->
+  <ul class="box">
+  	<?php if($myApp->isSU): ?>
+	<li><?php echo HTML::link('group/index', 'Groups'); ?>
+
+		<ul>
+			<li><?php echo HTML::link('group/index', 'List'); ?></li>
+			<li><?php echo HTML::link('group/create', 'Create'); ?></li>
+		</ul>
+	</li>
+	<li><?php echo HTML::link('account/index', 'Accounts'); ?>
+
+		<ul>
+			<li><?php echo HTML::link('account/index', 'List'); ?></li>
+			<li><?php echo HTML::link('account/create', 'Create'); ?></li>
+		</ul>
+	</li>
+	<li><?php echo HTML::link('appuser/index', 'App Users'); ?></li>
+	<?php else: ?>
+	<li><?php echo HTML::link('account/myaccount', 'My Account'); ?></li>
+	<li><?php echo HTML::link('appuser/groupusers', 'Group Users'); ?></li>
+	<?php endif; ?>
+
+<!-- 	<li><br/><br/></li>
+
+	<li><a href="#">Lorem ipsum</a></li>
+	<li><a href="#">Lorem ipsum</a></li>
+	<li id="submenu-active"><a href="#">Active Page</a>
+	  <ul>
+		<li><a href="#">Lorem ipsum</a></li>
+		<li><a href="#">Lorem ipsum</a></li>
+		<li><a href="#">Lorem ipsum</a></li>
+		<li><a href="#">Lorem ipsum</a></li>
+		<li><a href="#">Lorem ipsum</a></li>
+	  </ul>
+	</li>
+	<li><a href="#">Lorem ipsum</a></li>
+	<li><a href="#">Lorem ipsum</a>
+	  <ul>
+		<li><a href="#">Lorem ipsum</a></li>
+		<li><a href="#">Lorem ipsum</a></li>
+		<li><a href="#">Lorem ipsum</a></li>
+	  </ul>
+	</li>
+	<li><a href="#">Lorem ipsum</a></li>
+ -->
+  </ul>

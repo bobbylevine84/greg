@@ -1,0 +1,160 @@
+/* WRITE YOUR CSS CODE HERE */
+.clr{clear: both;}
+.wd100pr {width: 100%;}
+.validation-error{
+	display: block;
+	color: #F00932;
+	font-weight: bold;
+}
+
+#map-canvas {height: 200px; width: 100%; border: 1px solid #CCC; }
+
+.icon-action{cursor: pointer !important;}
+.red {color: #DD4B39;}
+.green {color: #00A65A;}
+.white {color: #FFF;}
+.yellow {color: #FFF000;}
+.orange {color: #F39C12;}
+.lblue {color: #3C8DBC;}
+
+.img-action {cursor: pointer; width: 16px; height: 16px;}
+.img-action:hover {}
+
+.left-tit{font-size: 20px; border-bottom: 2px solid black;}
+.input-req::after{content: " *"; color: #f00;}
+
+#locdetail-loader, #loclist-loader{
+	position: absolute;
+	margin-left: -15px;
+	margin-top: -15px;
+	top: 50%;
+	left: 50%;
+	display: none;
+}
+
+#location-details {
+	position: relative;
+	height: auto;
+	/*border: 1px solid #CCC;
+	padding: 10px 5px;*/
+	margin: 0px;
+}
+
+#location-scroll {
+	overflow-x: hidden;
+	max-height: 480px;
+	/*border: 1px solid #CCC;
+	padding: 10px 5px;*/
+	margin: 0 1px 0 0;
+}
+
+#loclist-heading:hover {
+	border: none;
+	background-color: #fff;
+}
+
+#loclist-heading th {
+	/*border-right: 1px solid #0074B3 !important;*/
+	background-color: #0085CC !important;
+	color: #FFF !important;
+}
+
+/*#location-scroll tr.bg td {border: 2px solid #E8F6FF !important;}*/
+
+#location-scroll tr.selected, #location-scroll tr:hover {
+	cursor: pointer;
+	border: 1px solid #BBDF8D;
+	background-color: #EAF7D9;
+}
+
+.deviceinfo-item{ width: 33%; display: inline-block;}
+.deviceinfo-label{width: 45%; float: left; font-weight: bold;}
+.deviceinfo-data{ width: 50%; float: right;}
+
+.btn-bool-badge {
+	padding: 3%;
+	width: 100%;
+	text-align: left;
+	border-radius: 2px;
+	background-color: #fff;
+	border-color: #D2D6DE;
+	cursor: default !important;
+	opacity: 1 !important;
+}
+.btn-true {
+	/*border: 2px solid #00A65A;*/
+}
+.btn-true .badge {
+	color: #fff;
+	background-color: #00A65A;
+}
+
+.btn-false {
+	/*border: 2px solid #DD4B39;*/
+}
+.btn-false .badge {
+	color: #fff;
+	background-color: #DD4B39;
+}
+
+.btn-default {
+	/*border: 2px solid #A9A9A9;
+	background-color: #FEEBEB;*/
+}
+.btn-default .badge {
+	color: #fff;
+	background-color: #A9A9A9;
+}
+
+.box-body h4.sub-head {
+	background-color: #F8F8FF;
+	padding: 10px;
+}
+
+/* PAGINATION STYLES */
+/*
+div.pagination-wrapper{text-align: center;}
+ul.pagination{display: inline-block;}
+ul.pagination li {display:inline; padding: 5px 5px;}
+ul.pagination li a {}
+
+ul.pagination li:first-child a, ul.pagination li:first-child span {
+    border-left-width: 1px;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+ul.pagination li:last-child a, ul.pagination li:last-child span {
+    border-right-width: 1px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+ul.pagination li a, ul.pagination li span {
+	float: left;
+	padding: 4px 12px;
+	line-height: 20px;
+	text-decoration: none;
+	background-color: #FFF;
+	border-width: 1px 1px 1px 0px;
+	border-style: solid;
+	border-color: #DDD;
+	-moz-border-top-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	border-image: none;
+}
+ul.pagination li.active {}
+ul.pagination li.active span {}
+*/
+/* END PAGINATION STYLES */
+
+.box-header { background-color: #F8F8FF;}
+.table tr th {
+	background-color: #3C8DBC;
+	color: #fff;
+}
+
+/* nav menu */
+.nav > li > a {display: inline-block;}

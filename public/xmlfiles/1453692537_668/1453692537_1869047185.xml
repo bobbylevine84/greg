@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="mds-service-firewall"
+        xmlns="urn:ietf:params:xml:ns:yang:yin:1"
+        xmlns:fire="com:gemds:services:firewall">
+  <namespace uri="com:gemds:services:firewall"/>
+  <prefix value="fire"/>
+  <import module="ietf-inet-types">
+    <prefix value="inet"/>
+  </import>
+  <import module="ietf-yang-types">
+    <prefix value="yang"/>
+  </import>
+  <import module="mds-services">
+    <prefix value="serv"/>
+  </import>
+  <import module="ietf-interfaces">
+    <prefix value="if"/>
+  </import>
+  <import module="mds-security">
+    <prefix value="sec"/>
+  </import>
+  <import module="mds-common">
+    <prefix value="mds"/>
+  </import>
+  <organization>
+    <text>GE MDS LLC</text>
+  </organization>
+  <contact>
+    <text>T 1-800-474-0694 (Toll Free in North America)
+T 585-242-9600
+F 585-242-9620
+
+175 Science Parkway
+Rochester, New York 14620
+USA
+</text>
+  </contact>
+  <description>
+    <text>This module contains a collection of YANG definitions for
+configuring firewall service.
+		
+Copyright (c) 2013 by GE MDS LLC. All rights reserved.</text>
+  </description>
+  <revision date="2015-07-23">
+    <description>
+      <text>Added GRE protocol option.</text>
+    </description>
+  </revision>
+  <revision date="2015-05-15">
+    <description>
+      <text>Added OSPF and RIP options.</text>
+    </description>
+  </revision>
+  <revision date="2014-11-19">
+    <description>
+      <text>Made static nat rule fields mandatory</text>
+    </description>
+  </revision>
+  <revision date="2014-10-09">
+    <description>
+      <text>Added allowed character set in description/help message.</text>
+    </description>
+  </revision>
+  <revision date="2014-08-26">
+    <description>
+      <text>Fixed spellings of icmp reject types</text>
+    </description>
+  </revision>
+  <revision date="2014-07-24">
+    <description>
+      <text>Fixed handling of SCTP protocol.</text>
+    </description>
+  </revision>
+  <revision date="2014-07-01">
+    <description>
+      <text>Added static NAT containor.</text>
+    </description>
+  </revision>
+  <revision date="2014-06-18">
+    <description>
+      <text>Added static (one-to-one) NAT.</text>
+    </description>
+  </revision>
+  <revision date="2013-08-09">
+    <description>
+      <text>Added 'not' directive to address-spec and port-spec. 
+Added address-set to address-spec.
+Updated SNAT and DNAT match specification</text>
+    </description>
+  </revision>
+  <revision date="2013-01-30">
+    <description>
+      <text>Baseline revision for release.</text>
+    </description>
+  </revision>
+  <revision date="2012-09-25">
+    <description>
+      <text>Initial revision.</text>
+    </description>
+  </revision>
+  <typedef name="protocol">
+    <type name="enumeration">
+      <enum name="all"/>
+      <enum name="sctp"/>
+      <enum name="tcp"/>
+      <enum name="udp"/>
+      <enum name="icmp"/>
+      <enum name="esp"/>
+      <enum name="ospf"/>
+      <enum name="gre"/>
+    </type>
+    <description>
+      <text>protocol type</text>
+    </description>
+  </typedef>
+  <typedef name="icmp-type">
+    <type name="enumeration">
+      <enum name="destination-unreachable"/>
+      <enum name="echo-request"/>
+      <enum name="echo-reply"/>
+      <enum name="address-mask-request"/>
+      <enum name="address-mask-reply"/>
+      <enum name="parameter-problem"/>
+      <enum name="redirect"/>
+      <enum name="router-advertisement"/>
+      <enum name="router-solicitation"/>
+      <enum name="source-quench"/>
+      <enum name="time-exceeded"/>
+      <enum name="timestamp-request"/>
+      <enum name="timestamp-reply"/>
+    </type>
+  </typedef>
+  <typedef name="icmp-reject-type">
+    <type name="enumeration">
+      <enum name="net-unreachable"/>
+      <enum name="host-unreachable"/>
+      <enum name="port-unreachable"/>
+      <enum name="proto-unreachable"/>
+      <enum name="net-prohibited"/>
+      <enum name="host-prohibited"/>
+      <enum name="admin-prohibited"/>
+    </type>
+  </typedef>
+  <typedef name="syslog-level">
+    <type name="enumeration">
+      <enum name="emergency"/>
+      <enum name="alert"/>
+      <enum name="critical"/>
+      <enum name="error"/>
+      <enum name="warning"/>
+      <enum name="notice"/>
+      <enum name="info"/>
+      <enum name="debug"/>
+    </type>
+  </typedef>
+  <grouping name="eth-type-spec">
+    <container name="not">
+      <presence value="not"/>
+      <description>
+        <text>If present, this inverts the sense of the match</text>
+      </description>
+    </container>
+    <choice name="type">
+      <mandatory value="true"/>
+      <case name="protocol">
+        <leaf name="protocol">
+          <type name="mds:ether-type"/>
+        </leaf>
+      </case>
+      <case name="custom">
+        <leaf name="custom">
+          <type name="union">
+            <type name="uint16"/>
+            <type name="mds:hex-value">
+              <length value="6">
+                <description>
+                  <text>hexUnsignedShort</text>
+                </description>
+                <error-message>
+                  <value>Two bytes must have exactly four hex characters
+after the 0x prefix</value>
+                </error-message>
+              </length>
+            </type>
+          </type>
+        </leaf>
+      </case>
+    </choice>
+  </grouping>
+  <grouping name="address-range">
+    <leaf name="from">
+      <type name="inet:ip-address"/>
+      <mandatory value="true"/>
+    </leaf>
+    <leaf name="to">
+      <type name="inet:ip-address"/>
+    </leaf>
+  </grouping>
+  <grouping name="mac-address-spec">
+    <container name="not">
+      <presence value="not"/>
+      <description>
+        <text>If present, this inverts the match</text>
+      </description>
+    </container>
+    <leaf name="address">
+      <type name="yang:mac-address"/>
+      <mandatory value="true"/>
+      <description>
+        <text>MAC address</text>
+      </description>
+    </leaf>
+    <leaf name="mask">
+      <type name="yang:mac-address"/>
+      <description>
+        <text>The mask for the MAC address</text>
+      </description>
+    </leaf>
+  </grouping>
+  <grouping name="address-spec">
+    <container name="not">
+      <presence value="not"/>
+      <description>
+        <text>If present, this inverts the sense of the address-spec</text>
+      </description>
+    </container>
+    <choice name="type">
+      <mandatory value="true"/>
+      <case name="address">
+        <leaf name="address">
+          <type name="inet:ipv4-prefix"/>
+          <description>
+            <text>address or network</text>
+          </description>
+        </leaf>
+      </case>
+      <case name="address-range">
+        <container name="address-range">
+          <uses name="address-range"/>
+          <description>
+            <text>address range</text>
+          </description>
+        </container>
+      </case>
+      <case name="address-set">
+        <leaf name="address-set">
+          <type name="leafref">
+            <path value="/serv:services/firewall/address-set/name"/>
+          </type>
+          <description>
+            <text>set of one or more addresses/networks</text>
+          </description>
+        </leaf>
+        <leaf name="add-interface-address">
+          <type name="boolean"/>
+          <default value="false"/>
+          <description>
+            <text>Add the address of the interface to which this filter has 
+been applied to the address-set</text>
+          </description>
+        </leaf>
+      </case>
+    </choice>
+  </grouping>
+  <grouping name="port-range">
+    <leaf name="from">
+      <type name="uint16"/>
+      <mandatory value="true"/>
+    </leaf>
+    <leaf name="to">
+      <type name="uint16"/>
+    </leaf>
+  </grouping>
+  <typedef name="service">
+    <type name="enumeration">
+      <enum name="dhcp"/>
+      <enum name="dns"/>
+      <enum name="ftp"/>
+      <enum name="http"/>
+      <enum name="https"/>
+      <enum name="ike"/>
+      <enum name="netconf"/>
+      <enum name="ntp"/>
+      <enum name="rip"/>
+      <enum name="snmp"/>
+      <enum name="ssh"/>
+      <enum name="tftp"/>
+      <enum name="traceroute"/>
+    </type>
+  </typedef>
+  <grouping name="port-spec">
+    <container name="not">
+      <presence value="not"/>
+      <description>
+        <text>if present, this inverts the sense of the port-spec</text>
+      </description>
+    </container>
+    <choice name="type">
+      <mandatory value="true"/>
+      <case name="services">
+        <leaf-list name="services">
+          <type name="service"/>
+        </leaf-list>
+      </case>
+      <case name="port-range">
+        <list name="port-range">
+          <key value="from"/>
+          <uses name="port-range"/>
+        </list>
+      </case>
+    </choice>
+  </grouping>
+  <typedef name="rule-action">
+    <type name="enumeration">
+      <enum name="accept">
+        <description>
+          <text>accept the packet</text>
+        </description>
+      </enum>
+      <enum name="drop">
+        <description>
+          <text>drop the packet</text>
+        </description>
+      </enum>
+      <enum name="reject">
+        <description>
+          <text>drop packet and send error message</text>
+        </description>
+      </enum>
+    </type>
+  </typedef>
+  <typedef name="rule-eth-action">
+    <type name="enumeration">
+      <enum name="accept">
+        <description>
+          <text>accept the packet</text>
+        </description>
+      </enum>
+      <enum name="drop">
+        <description>
+          <text>drop the packet</text>
+        </description>
+      </enum>
+    </type>
+  </typedef>
+  <augment target-node="/serv:services">
+    <container name="firewall">
+      <leaf name="enabled">
+        <type name="boolean"/>
+        <default value="false"/>
+        <description>
+          <text>Whether or not to run the firewall service</text>
+        </description>
+      </leaf>
+      <list name="address-set">
+        <key value="name"/>
+        <leaf name="name">
+          <type name="sec:word-string">
+            <length value="1..20"/>
+          </type>
+          <description>
+            <text>ASCII string identifying the address-set (allowed chars: a-zA-Z0-9-_).</text>
+          </description>
+        </leaf>
+        <leaf-list name="addresses">
+          <type name="inet:ipv4-prefix"/>
+          <description>
+            <text>List of addresses or networks</text>
+          </description>
+        </leaf-list>
+      </list>
+      <list name="filter">
+        <key value="name"/>
+        <leaf name="name">
+          <type name="sec:word-string">
+            <length value="1..20"/>
+          </type>
+          <description>
+            <text>ASCII string identifying the filter (allowed chars: a-zA-Z0-9-_).</text>
+          </description>
+        </leaf>
+        <list name="rule">
+          <key value="id"/>
+          <leaf name="id">
+            <type name="uint32"/>
+            <description>
+              <text>rule id</text>
+            </description>
+          </leaf>
+          <container name="match">
+            <leaf name="protocol">
+              <type name="protocol"/>
+              <default value="all"/>
+            </leaf>
+            <leaf name="icmp-type">
+              <when condition="../protocol = 'icmp'"/>
+              <type name="icmp-type"/>
+            </leaf>
+            <container name="src-address">
+              <presence value="source address"/>
+              <uses name="address-spec"/>
+              <description>
+                <text>source address(es) specification</text>
+              </description>
+            </container>
+            <container name="src-port">
+              <presence value="source port"/>
+              <when condition="../protocol = 'tcp' or ../protocol='udp' or ../protocol='sctp'"/>
+              <uses name="port-spec"/>
+              <description>
+                <text>source port(s) specification</text>
+              </description>
+            </container>
+            <container name="dst-address">
+              <presence value="destination address"/>
+              <uses name="address-spec"/>
+              <description>
+                <text>destination address(es) specification</text>
+              </description>
+            </container>
+            <container name="dst-port">
+              <presence value="destination port"/>
+              <when condition="../protocol = 'tcp' or ../protocol='udp' or ../protocol='sctp'"/>
+              <uses name="port-spec"/>
+              <description>
+                <text>destination port(s) specification</text>
+              </description>
+            </container>
+            <container name="ipsec">
+              <presence value="ipsec"/>
+              <leaf name="direction">
+                <mandatory value="true"/>
+                <type name="enumeration">
+                  <enum name="in"/>
+                  <enum name="out"/>
+                </type>
+                <description>
+                  <text>whether this rule matches incoming or outgoing traffic
+        inside ipsec tunnel</text>
+                </description>
+              </leaf>
+              <leaf name="tunnel-src-address">
+                <mandatory value="true"/>
+                <type name="inet:ipv4-prefix"/>
+                <description>
+                  <text>tunnel endpoint source address</text>
+                </description>
+              </leaf>
+              <leaf name="tunnel-dst-address">
+                <mandatory value="true"/>
+                <type name="inet:ipv4-prefix"/>
+                <description>
+                  <text>tunnel endpoint destination address</text>
+                </description>
+              </leaf>
+              <description>
+                <text>this allows one to match  traffic going into and coming
+out of the tunnel identified by tunnel source/destination 
+addresses</text>
+              </description>
+            </container>
+          </container>
+          <container name="actions">
+            <presence value="actions"/>
+            <leaf name="action">
+              <mandatory value="true"/>
+              <type name="rule-action"/>
+              <description>
+                <text>action to perform on matching packets</text>
+              </description>
+            </leaf>
+            <leaf name="reject-type">
+              <when condition="../action = 'reject'"/>
+              <type name="icmp-reject-type"/>
+              <description>
+                <text>type of icmp error message to be returned if action 
+is reject</text>
+              </description>
+            </leaf>
+            <container name="log">
+              <presence value="log"/>
+              <leaf name="level">
+                <type name="syslog-level"/>
+                <description>
+                  <text>syslog level</text>
+                </description>
+              </leaf>
+              <leaf name="prefix">
+                <type name="sec:word-string">
+                  <length value="1..29"/>
+                </type>
+                <description>
+                  <text>prefix log messages with the specified prefix. This
+is useful for distinguishing messages in the logs
+(allowed chars: a-zA-Z0-9-_).</text>
+                </description>
+              </leaf>
+              <description>
+                <text>enables logging of packets matching the rule via syslog</text>
+              </description>
+            </container>
+          </container>
+        </list>
+        <list name="rule-eth">
+          <key value="id"/>
+          <leaf name="id">
+            <type name="uint32"/>
+            <description>
+              <text>rule id</text>
+            </description>
+          </leaf>
+          <container name="match">
+            <container name="eth-type">
+              <presence value="layer 2 type"/>
+              <uses name="eth-type-spec"/>
+              <description>
+                <text>The layer 2 type in the ethernet header</text>
+              </description>
+            </container>
+            <container name="src-mac">
+              <presence value="sorce mac address"/>
+              <uses name="mac-address-spec"/>
+              <description>
+                <text>Source MAC address specification</text>
+              </description>
+            </container>
+            <container name="dst-mac">
+              <presence value="destination mac address"/>
+              <uses name="mac-address-spec"/>
+              <description>
+                <text>Destination MAC address specification</text>
+              </description>
+            </container>
+          </container>
+          <container name="actions">
+            <presence value="actions"/>
+            <leaf name="action">
+              <mandatory value="true"/>
+              <type name="rule-eth-action"/>
+              <description>
+                <text>action to perform on matching packets</text>
+              </description>
+            </leaf>
+            <container name="log">
+              <presence value="log"/>
+              <leaf name="level">
+                <type name="syslog-level"/>
+                <description>
+                  <text>syslog level</text>
+                </description>
+              </leaf>
+              <leaf name="prefix">
+                <type name="sec:word-string">
+                  <length value="1..29"/>
+                </type>
+                <description>
+                  <text>prefix log messages with the specified prefix. This
+is useful for distinguishing messages in the logs</text>
+                </description>
+              </leaf>
+              <description>
+                <text>enables logging of packets matching the rule via syslog</text>
+              </description>
+            </container>
+          </container>
+        </list>
+      </list>
+      <container name="nat">
+        <container name="source">
+          <list name="rule-set">
+            <key value="name"/>
+            <leaf name="name">
+              <type name="sec:word-string">
+                <length value="1..20"/>
+              </type>
+              <description>
+                <text>ASCII string identifying the rule-set (allowed chars: a-zA-Z0-9-_).</text>
+              </description>
+            </leaf>
+            <list name="rule">
+              <key value="id"/>
+              <leaf name="id">
+                <type name="uint32"/>
+                <description>
+                  <text>rule id</text>
+                </description>
+              </leaf>
+              <container name="match">
+                <container name="src-address">
+                  <presence value="source address"/>
+                  <uses name="address-spec"/>
+                  <description>
+                    <text>source address(es) specification</text>
+                  </description>
+                </container>
+                <container name="dst-address">
+                  <presence value="destination address"/>
+                  <uses name="address-spec"/>
+                  <description>
+                    <text>destination address(es) specification</text>
+                  </description>
+                </container>
+              </container>
+              <container name="source-nat">
+                <choice name="to">
+                  <mandatory value="true"/>
+                  <case name="interface">
+                    <container name="interface">
+                      <presence value="interface"/>
+                      <description>
+                        <text>translate source address to the address of 
+the egress interface</text>
+                      </description>
+                    </container>
+                  </case>
+                  <case name="address">
+                    <leaf name="address">
+                      <type name="inet:ip-address"/>
+                      <description>
+                        <text>translate source address to this address</text>
+                      </description>
+                    </leaf>
+                  </case>
+                </choice>
+              </container>
+            </list>
+          </list>
+        </container>
+        <container name="destination">
+          <list name="rule-set">
+            <key value="name"/>
+            <leaf name="name">
+              <type name="sec:word-string">
+                <length value="1..20"/>
+              </type>
+              <description>
+                <text>ASCII string identifying the rule-set (allowed chars: a-zA-Z0-9-_).</text>
+              </description>
+            </leaf>
+            <list name="rule">
+              <key value="id"/>
+              <leaf name="id">
+                <type name="uint32"/>
+                <description>
+                  <text>rule id</text>
+                </description>
+              </leaf>
+              <container name="match">
+                <leaf name="protocol">
+                  <type name="protocol"/>
+                  <default value="all"/>
+                </leaf>
+                <container name="src-address">
+                  <presence value="source address"/>
+                  <uses name="address-spec"/>
+                  <description>
+                    <text>source address(es) specification</text>
+                  </description>
+                </container>
+                <container name="dst-address">
+                  <presence value="destination address"/>
+                  <uses name="address-spec"/>
+                  <description>
+                    <text>destination address(es) specification</text>
+                  </description>
+                </container>
+                <leaf name="dst-port">
+                  <when condition="../protocol = 'tcp' or ../protocol='udp' or ../protocol='sctp'"/>
+                  <type name="inet:port-number"/>
+                  <description>
+                    <text>destination port</text>
+                  </description>
+                </leaf>
+              </container>
+              <container name="destination-nat">
+                <leaf name="address">
+                  <type name="inet:ip-address"/>
+                  <mandatory value="true"/>
+                  <description>
+                    <text>translate destination address to this address</text>
+                  </description>
+                </leaf>
+                <leaf name="port">
+                  <when condition="../../match/protocol = 'tcp' or&#10;../../match/protocol = 'udp' or&#10;../../match/protocol = 'sctp'"/>
+                  <type name="inet:port-number"/>
+                  <description>
+                    <text>translate destination port to this port</text>
+                  </description>
+                </leaf>
+              </container>
+            </list>
+          </list>
+        </container>
+        <container name="static">
+          <list name="rule-set">
+            <key value="name"/>
+            <leaf name="name">
+              <type name="sec:word-string">
+                <length value="1..20"/>
+              </type>
+              <description>
+                <text>ASCII string identifying the rule-set (allowed chars: a-zA-Z0-9-_).</text>
+              </description>
+            </leaf>
+            <list name="rule">
+              <key value="id"/>
+              <leaf name="id">
+                <type name="uint32"/>
+                <description>
+                  <text>rule id</text>
+                </description>
+              </leaf>
+              <container name="match">
+                <leaf name="dst-address">
+                  <mandatory value="true"/>
+                  <type name="inet:ipv4-prefix"/>
+                  <description>
+                    <text>destination address/network</text>
+                  </description>
+                </leaf>
+              </container>
+              <container name="static-nat">
+                <leaf name="address">
+                  <mandatory value="true"/>
+                  <type name="inet:ipv4-prefix"/>
+                  <description>
+                    <text>translate destination address/network to this address/network and vice versa</text>
+                  </description>
+                </leaf>
+              </container>
+            </list>
+          </list>
+        </container>
+      </container>
+    </container>
+  </augment>
+  <augment target-node="/if:interfaces/if:interface">
+    <container name="filter">
+      <leaf name="input">
+        <type name="leafref">
+          <path value="/serv:services/firewall/filter/name"/>
+        </type>
+        <must condition="(count(/serv:services/firewall/filter[name = current()/.]/rule-eth) = 0) or&#10;(../../if:type = 'mds_bridge:bridge') or&#10;(../../if:type = 'mds_vlan:vlan')">
+          <error-message>
+            <value>Only bridges and VLANs can have layer 2 filter rules.</value>
+          </error-message>
+        </must>
+      </leaf>
+      <leaf name="output">
+        <type name="leafref">
+          <path value="/serv:services/firewall/filter/name"/>
+        </type>
+        <must condition="(count(/serv:services/firewall/filter[name = current()/.]/rule-eth) = 0) or&#10;(../../if:type = 'mds_bridge:bridge') or&#10;(../../if:type = 'mds_vlan:vlan')">
+          <error-message>
+            <value>Only bridges and VLANs can have layer 2 filter rules.</value>
+          </error-message>
+        </must>
+      </leaf>
+    </container>
+    <container name="nat">
+      <leaf name="source">
+        <type name="leafref">
+          <path value="/serv:services/firewall/nat/source/rule-set/name"/>
+        </type>
+      </leaf>
+      <leaf name="destination">
+        <type name="leafref">
+          <path value="/serv:services/firewall/nat/destination/rule-set/name"/>
+        </type>
+      </leaf>
+      <leaf name="static">
+        <type name="leafref">
+          <path value="/serv:services/firewall/nat/static/rule-set/name"/>
+        </type>
+      </leaf>
+    </container>
+  </augment>
+</module>

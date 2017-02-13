@@ -1,0 +1,43 @@
+<div class="box-body">
+  <?php echo Form::open( array('id' => 'frmList', 'route' => ['masterdata.updatemodelfeature'], 'method' => 'post') ); ?>
+
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th width="90%">Feature Name</th>
+        <th width="10%">Action</th>
+      </tr>
+
+      <?php $pageerrors = Session::get('formerrors'); ?>
+
+      <?php foreach($records as $k => $r): ?>
+      <tr>
+
+        <td>
+          <?php echo Form::hidden('keys['.$k.']', $r->_id); ?>
+
+          <?php echo Form::text('records['.$k.'][name]', $r->name, ['id' => 'name'.$k, 'placeholder' => 'Region Name', 'class' => 'form-control validate[required]']); ?>
+
+          <?php if(isset($pageerrors) && isset($pageerrors[$k]) && isset($pageerrors[$k]['name'])): ?>
+            <span class="validation-error"><?php echo $pageerrors[$k]['name']; ?></span>
+          <?php endif; ?>
+        </td>
+
+        <td>
+          <span class="glyphicon glyphicon-trash icon-action red" onclick="javascript:confirmAction('<?php echo URL::route('masterdata.destroymodelfeature', [ $r->_id, $page ] ); ?>', 'Delete this record?')" title="Delete"></span>
+        </td>
+      </tr>
+      <?php endforeach; ?>
+
+    </table>
+
+    <div class="box-footer clearfix">
+      <input value=" Save " name="btnSave" class="btn btn-primary" type="submit" /> &nbsp; 
+      <div class="pagination pagination-sm no-margin pull-right">
+        <?php echo $records->links(); ?>
+
+      </div>
+    </div>
+    <input type="hidden" name="page" value="<?php echo $page; ?>" />
+  <?php echo Form::close(); ?>
+
+</div><!-- /.box-body -->

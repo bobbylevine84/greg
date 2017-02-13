@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="mds-service-ddns"
+        xmlns="urn:ietf:params:xml:ns:yang:yin:1"
+        xmlns:ddns="com:gemds:services:ddns">
+  <namespace uri="com:gemds:services:ddns"/>
+  <prefix value="ddns"/>
+  <import module="mds-services">
+    <prefix value="serv"/>
+  </import>
+  <import module="ietf-interfaces">
+    <prefix value="if"/>
+  </import>
+  <import module="mds-certmgr">
+    <prefix value="mdscert"/>
+  </import>
+  <import module="ietf-yang-types">
+    <prefix value="yang"/>
+  </import>
+  <organization>
+    <text>GE MDS LLC</text>
+  </organization>
+  <contact>
+    <text>T 1-800-474-0694 (Toll Free in North America)
+T 585-242-9600
+F 585-242-9620
+
+175 Science Parkway
+Rochester, New York 14620
+USA
+</text>
+  </contact>
+  <description>
+    <text>This module contains a collection of YANG definitions for
+configuring ddns service.
+		
+Copyright (c) 2015 by GE MDS LLC. All rights reserved.</text>
+  </description>
+  <revision date="2015-04-13">
+    <description>
+      <text>Changed path for certificates.</text>
+    </description>
+  </revision>
+  <revision date="2015-01-23">
+    <description>
+      <text>Initial revision.</text>
+    </description>
+  </revision>
+  <augment target-node="/serv:services">
+    <container name="ddns">
+      <must condition="(enabled = 'true' and provider and hostname and interface and username and password) or &#10;(enabled = 'false')">
+        <error-message>
+          <value>Provider, hostname, username, password, and interface must be configured</value>
+        </error-message>
+      </must>
+      <leaf name="enabled">
+        <type name="boolean"/>
+        <default value="false"/>
+        <description>
+          <text>Whether or not to run the DDNS service</text>
+        </description>
+      </leaf>
+      <leaf name="provider">
+        <description>
+          <text>The DDNS provider to use</text>
+        </description>
+        <type name="enumeration">
+          <enum name="dyn.com">
+            <description>
+              <text>dyn.com DDNS service, also known as DynDNS or dyndns.com</text>
+            </description>
+          </enum>
+          <enum name="noip.com">
+            <description>
+              <text>noip.com DDNS service</text>
+            </description>
+          </enum>
+          <enum name="other">
+            <description>
+              <text>User defined URL</text>
+            </description>
+          </enum>
+        </type>
+      </leaf>
+      <leaf name="url">
+        <when condition="../provider = 'other'"/>
+        <type name="string">
+          <length value="1 .. 1024"/>
+        </type>
+        <default value="http://[USERNAME]:[PASSWORD]@example.com/nic/update?hostname=[HOSTNAME]&amp;myip=[IP]"/>
+        <description>
+          <text>A user defined URL to use for sending updates to the DDNS server when service is set to 'other'</text>
+        </description>
+      </leaf>
+      <leaf name="hostname">
+        <type name="string">
+          <length value="1 .. 255"/>
+        </type>
+        <description>
+          <text>The fully qualified domain name to update with a new IP</text>
+        </description>
+      </leaf>
+      <leaf name="username">
+        <type name="string">
+          <length value="1 .. 255"/>
+        </type>
+        <description>
+          <text>The username for the account at the DDNS server</text>
+        </description>
+      </leaf>
+      <leaf name="password">
+        <type name="aes-cfb-128-encrypted-string">
+          <length value="1..352"/>
+        </type>
+        <description>
+          <text>The password for the account at the DDNS server</text>
+        </description>
+      </leaf>
+      <leaf name="interface">
+        <type name="if:interface-ref"/>
+        <description>
+          <text>The IP address from this interface will be used to update the DDNS server</text>
+        </description>
+      </leaf>
+      <leaf name="update-interval">
+        <type name="uint32">
+          <range value="5..10080"/>
+        </type>
+        <default value="1440"/>
+        <description>
+          <text>The interval, in minutes, at which periodic updates will occur</text>
+        </description>
+      </leaf>
+      <leaf name="failure-retry-interval">
+        <type name="uint32">
+          <range value="5..30"/>
+        </type>
+        <default value="5"/>
+        <description>
+          <text>The interval, in seconds, at which retries will occur if a connection cannot be made to the DDNS server</text>
+        </description>
+      </leaf>
+      <leaf name="max-failure-retries">
+        <type name="uint32">
+          <range value="1..10"/>
+        </type>
+        <default value="6"/>
+        <description>
+          <text>The max number of times to retry connecting to the DDNS server for an update</text>
+        </description>
+      </leaf>
+      <leaf name="https">
+        <when condition="../provider != 'other'"/>
+        <type name="boolean"/>
+        <default value="false"/>
+        <description>
+          <text>Whether or not to use HTTPS when sending DDNS updates</text>
+        </description>
+      </leaf>
+      <leaf name="verify-server-certificate">
+        <type name="boolean"/>
+        <default value="false"/>
+        <description>
+          <text>Whether or not to verify the DDNS server's certificate</text>
+        </description>
+      </leaf>
+      <leaf name="ca-certificate">
+        <type name="string"/>
+        <description>
+          <text>A locally stored CA certficate to use when verifying the DDNS server's certificate</text>
+        </description>
+      </leaf>
+      <container name="status">
+        <config value="false"/>
+        <leaf name="update-state">
+          <description>
+            <text>The current state of DDNS update operation</text>
+          </description>
+          <type name="enumeration">
+            <enum name="disabled">
+              <description>
+                <text>DDNS is disabled</text>
+              </description>
+            </enum>
+            <enum name="failed">
+              <description>
+                <text>An update cannot be sent to the DDNS server</text>
+              </description>
+            </enum>
+            <enum name="pending">
+              <description>
+                <text>The current IP address of the selected interface is pending a successful update to the DDNS server</text>
+              </description>
+            </enum>
+            <enum name="success">
+              <description>
+                <text>The current IP address of the selected interface was sent successfully to the DDNS server</text>
+              </description>
+            </enum>
+          </type>
+        </leaf>
+        <leaf name="update-failure-reason">
+          <type name="string"/>
+          <description>
+            <text>The reason if the DDNS failed to update</text>
+          </description>
+        </leaf>
+        <leaf name="update-timestamp">
+          <type name="yang:date-and-time"/>
+          <description>
+            <text>timestamp of last update</text>
+          </description>
+        </leaf>
+      </container>
+    </container>
+  </augment>
+  <typedef name="aes-cfb-128-encrypted-string">
+    <type name="string"/>
+    <description>
+      <text>The aes-cfb-128-encrypted-string works exactly like
+des3-cbc-encrypted-string but AES/128bits in CFB mode is used to
+encrypt the string.  The prefix for encrypted values is '$4$'.</text>
+    </description>
+  </typedef>
+</module>

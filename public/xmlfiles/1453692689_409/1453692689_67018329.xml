@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="cee"
+        xmlns="urn:ietf:params:xml:ns:yang:yin:1"
+        xmlns:cee="org:mitre:cee">
+  <namespace uri="org:mitre:cee"/>
+  <prefix value="cee"/>
+  <import module="ietf-inet-types">
+    <prefix value="inet"/>
+  </import>
+  <organization>
+    <text>GE MDS LLC</text>
+  </organization>
+  <contact>
+    <text>T 1-800-474-0694 (Toll Free in North America)
+T 585-242-9600
+F 585-242-9620
+
+175 Science Parkway
+Rochester, New York 14620
+USA
+</text>
+  </contact>
+  <description>
+    <text>This module contains a the YANG definitions for CEE v1.0-beta1
+core profile events
+
+Copyright (c) 2013 by GE MDS LLC. All rights reserved.</text>
+  </description>
+  <revision date="2013-01-30">
+    <description>
+      <text>Baseline revision for release.</text>
+    </description>
+  </revision>
+  <revision date="2012-09-05">
+    <description>
+      <text>Initial revision.</text>
+    </description>
+  </revision>
+  <grouping name="src-dst-object">
+    <leaf name="ipv4">
+      <type name="inet:ipv4-address"/>
+    </leaf>
+    <leaf name="ipv6">
+      <type name="inet:ipv6-address"/>
+    </leaf>
+    <leaf name="port">
+      <type name="inet:port-number"/>
+    </leaf>
+    <leaf name="host">
+      <type name="string"/>
+    </leaf>
+  </grouping>
+  <grouping name="syslog-object">
+    <leaf name="fac">
+      <type name="uint32"/>
+    </leaf>
+    <leaf name="pri">
+      <type name="uint32"/>
+    </leaf>
+    <leaf name="ver">
+      <type name="uint32"/>
+    </leaf>
+    <leaf name="tag">
+      <type name="string"/>
+    </leaf>
+  </grouping>
+  <grouping name="file-object">
+    <leaf name="hashmd5">
+      <type name="string"/>
+    </leaf>
+    <leaf name="line">
+      <type name="uint32"/>
+    </leaf>
+    <leaf name="mode">
+      <type name="string"/>
+    </leaf>
+    <leaf name="name">
+      <type name="string"/>
+    </leaf>
+    <leaf name="path">
+      <type name="string"/>
+    </leaf>
+    <leaf name="perm">
+      <type name="string"/>
+    </leaf>
+    <leaf name="size">
+      <type name="uint32"/>
+    </leaf>
+  </grouping>
+  <grouping name="user-object">
+    <leaf name="domain">
+      <type name="string"/>
+    </leaf>
+    <leaf name="gid">
+      <type name="string"/>
+    </leaf>
+    <leaf name="group">
+      <type name="string"/>
+    </leaf>
+    <leaf name="id">
+      <type name="string"/>
+    </leaf>
+    <leaf name="name">
+      <type name="string"/>
+    </leaf>
+  </grouping>
+  <grouping name="app-object">
+    <leaf name="name">
+      <type name="string"/>
+    </leaf>
+    <leaf name="vend">
+      <type name="string"/>
+    </leaf>
+    <leaf name="ver">
+      <type name="string"/>
+    </leaf>
+  </grouping>
+  <grouping name="proc-object">
+    <leaf name="id">
+      <type name="string"/>
+    </leaf>
+    <leaf name="name">
+      <type name="string"/>
+    </leaf>
+    <leaf name="tid">
+      <type name="uint32"/>
+    </leaf>
+  </grouping>
+  <grouping name="cee-event-object">
+    <leaf name="hostname">
+      <type name="string"/>
+      <mandatory value="true"/>
+    </leaf>
+    <leaf name="pname">
+      <type name="string"/>
+      <mandatory value="true"/>
+    </leaf>
+    <leaf name="time">
+      <type name="string"/>
+      <mandatory value="true"/>
+    </leaf>
+    <leaf name="action">
+      <type name="string"/>
+    </leaf>
+    <leaf name="domain">
+      <type name="string"/>
+    </leaf>
+    <leaf name="object">
+      <type name="string"/>
+    </leaf>
+    <leaf name="service">
+      <type name="string"/>
+    </leaf>
+    <leaf name="status">
+      <type name="string"/>
+    </leaf>
+    <container name="app">
+      <uses name="app-object"/>
+    </container>
+    <leaf name="appname">
+      <type name="string"/>
+    </leaf>
+    <leaf name="auid">
+      <type name="string"/>
+    </leaf>
+    <leaf name="cmd">
+      <type name="string"/>
+    </leaf>
+    <container name="dst">
+      <uses name="src-dst-object"/>
+    </container>
+    <leaf name="egid">
+      <type name="string"/>
+    </leaf>
+    <leaf name="euid">
+      <type name="string"/>
+    </leaf>
+    <container name="file">
+      <uses name="file-object"/>
+    </container>
+    <leaf name="ipv4">
+      <type name="inet:ipv4-address"/>
+    </leaf>
+    <leaf name="ipv6">
+      <type name="inet:ipv6-address"/>
+    </leaf>
+    <leaf name="msg">
+      <type name="string"/>
+    </leaf>
+    <leaf name="msgid">
+      <type name="string"/>
+    </leaf>
+    <leaf name="pid">
+      <type name="string"/>
+    </leaf>
+    <leaf name="pri">
+      <type name="string"/>
+    </leaf>
+    <container name="proc">
+      <uses name="proc-object"/>
+    </container>
+    <leaf name="sev">
+      <type name="uint32"/>
+    </leaf>
+    <container name="src">
+      <uses name="src-dst-object"/>
+    </container>
+    <leaf name="subsys">
+      <type name="string"/>
+    </leaf>
+    <container name="syslog">
+      <uses name="syslog-object"/>
+    </container>
+    <leaf name="tid">
+      <type name="uint32"/>
+    </leaf>
+    <leaf name="uid">
+      <type name="string"/>
+    </leaf>
+    <container name="user">
+      <uses name="user-object"/>
+    </container>
+    <leaf name="username">
+      <type name="string"/>
+    </leaf>
+    <leaf name="vend">
+      <type name="string"/>
+    </leaf>
+    <leaf name="ver">
+      <type name="string"/>
+    </leaf>
+  </grouping>
+  <notification name="cee-event">
+    <uses name="cee-event-object"/>
+  </notification>
+</module>

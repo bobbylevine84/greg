@@ -1,0 +1,47 @@
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- SOME MODAL CONTENT VIA iFRAME :) AND OOPS, THE DETAILS ARE FOR <?php echo $pid; ?> -->
+
+      <!-- list table -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">List</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th width="20%" class="" data-field="tbl_template.tmpl_name">User</th>
+              <th width="20%" class="" data-field="tbl_template.tmpl_name">Date/Time</th>
+              <th width="20%" class="" data-field="tbl_template.tmpl_name">Vendor</th>
+              <th width="15%" class="" data-field="tbl_template.tmpl_name">Model</th>
+              <th width="13%" class="" data-field="tbl_template.tmpl_name">Serial</th>
+              <th width="12%" class="" data-field="tbl_template.tmpl_name">IP Address</th>
+            </tr>
+
+            <?php if($records): ?>
+              <?php foreach($records as $k => $r): ?>
+                <tr>
+                  <td><?php echo $r->user; ?></td>
+                  <td><?php echo $r->dt; ?></td>
+                  <td><?php echo $r->vendor; ?></td>
+                  <td><?php echo $r->model; ?></td>
+                  <td><?php echo $r->serial; ?></td>
+                  <td><?php echo $r->depips; ?></td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="4">No deployments found.</td>
+              </tr>
+            <?php endif; ?>
+
+          </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+        </div>
+      </div><!-- /.box / list table -->
+
+
+    </div>
+  </div>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Got Apps? Phone Tracker</title>
+
+  <?php echo $__env->make('includes.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <?php echo $__env->yieldContent('headscripts'); ?>
+
+    <script>
+      $(document).ready(function() {
+        setTimeout(function() {
+          $('.msgalert').slideUp('slow');
+        }, 4000);
+      });
+    </script>
+
+</head>
+<body>
+<div id="main">
+  <!-- Tray -->
+  <div id="tray" class="box">
+	<?php echo $__env->make('includes.toptray', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  </div>
+  <!--  /tray -->
+  <hr class="noscreen" />
+  <!-- Menu -->
+  <div id="menu" class="box">
+	<?php echo $__env->make('includes.topmenu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  </div>
+  <!-- /header -->
+  <hr class="noscreen" />
+  <!-- Columns -->
+  <div id="cols" class="box">
+    <!-- Aside (Left Column) -->
+    <div id="aside" class="box">
+		<?php echo $__env->make('includes.leftsidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	</div>
+    <!-- /aside -->
+    <hr class="noscreen" />
+    <!-- Content (Right Column) -->
+    <div id="content" class="box">
+		<?php echo $__env->yieldContent('content'); ?>
+	</div>
+    <!-- /content -->
+  </div>
+  <!-- /cols -->
+  <hr class="noscreen" />
+  <!-- Footer -->
+  <div id="footer" class="box">
+    <?php echo $__env->make('includes.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  </div>
+  <!-- /footer -->
+</div>
+<!-- /main -->
+<script type="text/javascript">
+  <?php echo $__env->yieldContent('lscripts'); ?>
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body>
+<table width="728" cellspacing="0" border="0" align="center" style="font-size:14px; font-family:Verdana, Arial, Helvetica, sans-serif; background-color:#ECF0F5; color:#252525;">
+  <tr>
+    <td style="background-color:#3C8DBC; color:#ffffff; font-size:18px; line-height:40px;padding:10px;">
+      <span style="font-weight:bold;">FanApp</span></td>
+  </tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">Dear <?php echo $name; ?>,</td></tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">You have been invited to FanApp as an <b>Administrator</b> of <b><?php echo $app_name; ?></b>.</td></tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">Please <a target="_blank" href="<?php echo $link; ?>">click here</a> or use the below link to setup your account and start connecting with your fans.</td></tr>
+   <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;"><?php echo $link; ?></td></tr>
+ <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">Regards,</td></tr>
+  <tr><td style="padding:0 10px;">The FanApp Team</td></tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td style="border-bottom:3px solid #3C8DBC;">&nbsp;</td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?php $__env->startSection('content'); ?>
+<!-- Form -->
+<h1>Login</h1>
+<fieldset>
+<table class="nostyle wd100pr">
+  <tr>
+	  <td><strong class="bigger">Username/Email</strong></td>
+  </tr>
+  <tr>
+	  <td><input type="text" name="" class="input-text wd100pr"/></td>
+  </tr>
+  <tr>
+	  <td><strong class="bigger">Password</strong></td>
+  </tr>
+  <tr>
+	  <td><input type="text" name="" class="input-text wd100pr"/></td>
+  </tr>
+
+  <tr><td>&nbsp;</td></tr>
+<tr>
+  <td align="center"><input type="submit" class="input-submit" value="  Login  " /></td>
+</tr>
+</table>
+</fieldset>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.login', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

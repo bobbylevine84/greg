@@ -1,0 +1,116 @@
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, status) {
+        //alert(status);
+        //submitImportForm(frm);
+        return status;
+      }
+    });
+
+    // styled checkboxes
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].square-red, input[type="radio"].square-red').iCheck({
+      checkboxClass: 'icheckbox_square-red',
+      radioClass: 'icheckbox_square-red'
+    });
+
+  });
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Radio Inventory <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formsubmitalerts_noclose', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+        <!-- search form -->
+        <!-- general form elements disabled -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Import Yang File</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+
+			<div class="clr"></div>
+
+          <div class="box-body">
+
+            <div class="box-footer" style="padding: 15px 15px;">
+
+              <?php if($allowsave=='YES_CERTAINLY'): ?>
+	              <input value=" Save Attributes & Exit " target="_blank" name="btnSave" class="btn btn-primary" type="button" onclick="window.location.href='<?php echo URL::route('masterdata.savevendormodelyangfile'); ?>'" /> &nbsp; &nbsp; 
+              <?php endif; ?>
+              <input value=" Back " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('masterdata.vendormodelfeature'); ?>'" />
+
+            </div>
+          
+          </div><!-- /.box-body -->
+
+
+          <?php if($processlog): ?>
+
+          <?php //$logrecords = Session::get('v-yangimpres'); ?>
+
+			<!-- Process Log -->
+			<div class="box-header with-border">
+				<h3 class="box-title">Process Log</h3>
+			</div><!-- /.box-header -->
+
+	        <div class="box-body">
+	          <table class="table table-bordered table-striped">
+	            <tr>
+	              <th width="100%">Log Entries</th>
+	            </tr>
+
+	            <?php foreach($processlog as $k => $r): ?>
+	            <tr>
+	              <td><?php echo $r; ?></td>
+	            </tr>
+	            <?php endforeach; ?>
+
+	          </table>
+	        </div><!-- /.box-body -->
+
+	      <?php endif; ?>
+
+
+			<div class="clr"></div>
+
+          <div class="box-body">
+
+            <div class="box-footer" style="padding: 15px 15px;">
+
+              <?php if($allowsave=='YES_CERTAINLY'): ?>
+	              <input value=" Save Attributes & Exit " target="_blank" name="btnSave" class="btn btn-primary" type="button" onclick="window.location.href='<?php echo URL::route('masterdata.savevendormodelyangfile'); ?>'" /> &nbsp; &nbsp; 
+              <?php endif; ?>
+              <input value=" Back " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('masterdata.vendormodelfeature'); ?>'" />
+
+            </div>
+          
+          </div><!-- /.box-body -->
+
+
+        </div><!-- /.box -->
+        <!-- /search form -->
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

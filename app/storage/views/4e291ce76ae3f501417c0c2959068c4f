@@ -1,0 +1,35 @@
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+<?php echo HTML::style('public/assets/css/reset.css', array('media' => 'screen,projection', 'type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php echo HTML::style('public/assets/css/main.css', array('media' => 'screen,projection', 'type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php echo HTML::style('public/assets/css/2col.css', array('title' => '2col', 'media' => 'screen,projection', 'type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php echo HTML::style('public/assets/css/1col.css', array('title' => '1col', 'media' => 'screen,projection', 'type' => 'text/css', 'rel' => 'alternate stylesheet' )); ?>
+
+<!--[if lte IE 6]>
+	<?php echo HTML::style('public/assets/css/main-ie6.css', array('media' => 'screen,projection', 'type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<![endif]-->
+<?php echo HTML::style('public/assets/css/style.css', array('media' => 'screen,projection', 'type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php echo HTML::style('public/assets/css/mystyle.css', array('media' => 'screen,projection', 'type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+
+<?php echo HTML::script('public/assets/js/jquery.js', array('type' => 'text/javascript')); ?>
+
+<?php echo HTML::script('public/assets/js/switcher.js', array('type' => 'text/javascript')); ?>
+
+<?php echo HTML::script('public/assets/js/toggle.js', array('type' => 'text/javascript')); ?>
+
+<?php echo HTML::script('public/assets/js/ui.core.js', array('type' => 'text/javascript')); ?>
+
+<?php echo HTML::script('public/assets/js/ui.tabs.js', array('type' => 'text/javascript')); ?>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".tabs > ul").tabs();
+    });
+</script>

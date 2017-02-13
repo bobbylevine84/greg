@@ -1,0 +1,16 @@
+<p class="f-left box">
+  <!-- Switcher -->
+  <span class="f-left" id="switcher">
+	<a href="javascript:void(0);" rel="1col" class="styleswitch ico-col1" title="Display one column">
+		<?php echo HTML::image('public/assets/design/switcher-1col.gif', '1 Column'); ?>
+
+	</a> 
+	<a href="javascript:void(0)" rel="2col" class="styleswitch ico-col2" title="Display two columns">
+		<?php echo HTML::image('public/assets/design/switcher-2col.gif'); ?>
+
+	</a> 
+</span> Project: <strong>Your Project</strong> </p>
+<p class="f-right">User: 
+	<strong><a href="#"><?php echo e($username); ?></a></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+	<strong><?php echo HTML::link('/logout', 'Log Out', array('id' => 'logout')); ?></strong>
+</p>

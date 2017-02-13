@@ -1,0 +1,1028 @@
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, res) {
+        return res;
+      }
+    });
+
+    $('.req-emailinv, .req-cpcc, .req-accinfo').hide();
+
+/**/
+
+    // styled checkboxes
+    //Red color scheme for iCheck
+    //$('input[type="checkbox"].square-red, input[type="radio"].square-red').iCheck({
+    $('input[type="checkbox"].square-red, input[type="radio"].square-red').iCheck({
+      checkboxClass: 'icheckbox_square-red',
+      radioClass: 'iradio_square-red'
+    });
+
+
+    //////////////////////////////////////////////////////////
+    //////// handle invoice same as billing checkbox /////////
+    //////////////////////////////////////////////////////////
+
+    // inv_eq_bill event handlers
+    $('#inv_eq_bill').on('ifChecked', function(event){
+      $('.cpbill').val('').attr('readonly', true);
+      $('.req-cpbill').hide();
+    });
+    $('#inv_eq_bill').on('ifUnchecked', function(event){
+      $('.cpbill').attr('readonly', false);
+      $('.req-cpbill').show();
+    });
+
+    // populating as per initial data
+    var inv_eq_bill = '<?php echo $record->inv_eq_bill; ?>';
+    if(inv_eq_bill == '1') $('#inv_eq_bill').iCheck('check');
+    else $('#inv_eq_bill').iCheck('uncheck');
+
+    //////////////////////////////////////////////////////////
+    //// end of handling invoice same as billing checkbox ////
+    //////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////
+    //////// handle credit card applicable checkbox //////////
+    //////////////////////////////////////////////////////////
+
+    // has_cc event handlers
+    $('#has_cc').on('ifChecked', function(event){
+      $('.cpcc').attr('readonly', false);
+      $('.req-cpcc').show();
+    });
+    $('#has_cc').on('ifUnchecked', function(event){
+      $('.cpcc').val('').attr('readonly', true);
+      $('.req-cpcc').hide();
+    });
+
+    // populating as per initial data
+    var has_cc = '<?php echo $record->has_cc; ?>';
+    if(has_cc == '1') $('#has_cc').iCheck('check');
+    else $('#has_cc').iCheck('uncheck');
+
+    //////////////////////////////////////////////////////////
+    ///// end of handle credit card applicable checkbox //////
+    //////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////
+    ///////// handle accept eft payments radios ////////
+    ////////////////////////////////////////////////////
+
+    // accept_eft event handlers
+    $('#accept_eft_1').on('ifChecked', function(event){
+      $('.accinfo').attr('readonly', false);
+      $('.req-accinfo').show();
+    });
+    $('#accept_eft_0').on('ifChecked', function(event){
+      $('.accinfo').val('').attr('readonly', true);
+      $('.req-accinfo').hide();
+    });
+
+    // populating as per initial data
+    var accept_eft = '<?php echo $record->accept_eft; ?>';
+    if(accept_eft == '1') $('#accept_eft_1').iCheck('check');
+    else $('#accept_eft_0').iCheck('check');
+
+    ////////////////////////////////////////////////////
+    //// end of handling accept eft payments radios ////
+    ////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////
+    /////// handle email invoice radios //////////
+    //////////////////////////////////////////////
+
+    // email_inv event handlers
+    $('#email_inv_1').on('ifChecked', function(event){
+      $('#email_inv_to').attr('readonly', false);
+      $('.req-emailinv').show();
+    });
+    $('#email_inv_0').on('ifChecked', function(event){
+      $('#email_inv_to').val('').attr('readonly', true);
+      $('.req-emailinv').hide();
+    });
+
+    // populating as per initial data
+    var email_inv = '<?php echo $record->email_inv; ?>';
+    if(email_inv == '1') $('#email_inv_1').iCheck('check');
+    else $('#email_inv_0').iCheck('check');
+
+    //////////////////////////////////////////////
+    //// end of handling email invoice radios ////
+    //////////////////////////////////////////////
+
+    // populating as per initial data
+    var proc_multi_inv = '<?php echo $record->proc_multi_inv; ?>';
+    if(proc_multi_inv == '1') $('#proc_multi_inv_1').iCheck('check');
+    else $('#proc_multi_inv_0').iCheck('check');
+
+    // populating as per initial data
+    var order_via_email = '<?php echo $record->order_via_email; ?>';
+alert(order_via_email);
+    if(order_via_email == '1') $('#order_via_email_1').iCheck('check');
+    else $('#order_via_email_0').iCheck('check');
+/**/
+
+  });
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('hassets'); ?>
+  <!-- For iCheckbox -->
+  <?php echo HTML::style('public/plugins/iCheck/all.css', array('type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footscripts'); ?>
+  <!-- iCheck 1.0.1 -->
+  <?php echo HTML::script('public/plugins/iCheck/icheck.min.js', array('type' => 'text/javascript')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- <?php echo pr($record->getAttributes()); ?> -->
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Account On-Boarding <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <?php echo Form::model( $record, array('id' => 'frmRecord', 'route' => ['onboarding.update', $record->board_id ], 'method' => 'post') ); ?>
+
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Edit On-Boarding Information</h3> &nbsp; (<small><span class="fa fa-star red"> required field</span></small>)
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          
+        </div><!-- /.box-body -->
+
+            <!-- text input -->
+            <!-- <div class="col-md-6">
+              <div class="form-group">
+                <label>Rep Name &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('rep_name', null, ['id' => 'rep_name', 'placeholder' => 'Rep Name', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('rep_name', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div> -->
+
+        <!-- Billing -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Billing</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1 <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('bill_addr1', null, ['id' => 'bill_addr1', 'placeholder' => 'Address 1', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('bill_addr1', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2 <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('bill_addr2', null, ['id' => 'bill_addr2', 'placeholder' => 'Address 2', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('bill_addr2', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3 <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('bill_addr3', null, ['id' => 'bill_addr3', 'placeholder' => 'Address 3', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('bill_addr3', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('bill_city', null, ['id' => 'bill_city', 'placeholder' => 'City', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('bill_city', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('bill_state', null, ['id' => 'bill_state', 'placeholder' => 'State', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('bill_state', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('bill_zip', null, ['id' => 'bill_zip', 'placeholder' => 'Zip', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('bill_zip', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Billing -->
+
+        <!-- Invoicing -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Invoicing</h3> 
+          <?php echo Form::checkbox('inv_eq_bill', '1', null, [ 'id' => 'inv_eq_bill', 'class' => 'square-red' ]); ?> Check if same as Billing
+          <!-- <input type="checkbox" name="inv_eq_bill" id="inv_eq_bill" value="1" class="square-red" /> Check if same as Billing -->
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1 <small><span class="req-cpbill fa fa-star red"></span></small></label>
+              <?php echo Form::text('inv_addr1', null, ['id' => 'inv_addr1', 'placeholder' => 'Address 1', 'class' => 'cpbill form-control validate[required]']); ?>
+
+              <?php echo $errors->first('inv_addr1', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2 <small><span class="req-cpbill fa fa-star red"></span></small></label>
+              <?php echo Form::text('inv_addr2', null, ['id' => 'inv_addr2', 'placeholder' => 'Address 2', 'class' => 'cpbill form-control validate[required]']); ?>
+
+              <?php echo $errors->first('inv_addr2', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3 <small><span class="req-cpbill fa fa-star red"></span></small></label>
+              <?php echo Form::text('inv_addr3', null, ['id' => 'inv_addr3', 'placeholder' => 'Address 3', 'class' => 'cpbill form-control validate[required]']); ?>
+
+              <?php echo $errors->first('inv_addr3', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City <small><span class="req-cpbill fa fa-star red"></span></small></label>
+              <?php echo Form::text('inv_city', null, ['id' => 'inv_city', 'placeholder' => 'City', 'class' => 'cpbill form-control validate[required]']); ?>
+
+              <?php echo $errors->first('inv_city', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State <small><span class="req-cpbill fa fa-star red"></span></small></label>
+              <?php echo Form::text('inv_state', null, ['id' => 'inv_state', 'placeholder' => 'State', 'class' => 'cpbill form-control validate[required]']); ?>
+
+              <?php echo $errors->first('inv_state', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip <small><span class="req-cpbill fa fa-star red"></span></small></label>
+              <?php echo Form::text('inv_zip', null, ['id' => 'inv_zip', 'placeholder' => 'Zip', 'class' => 'cpbill form-control validate[required]']); ?>
+
+              <?php echo $errors->first('inv_zip', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Invoicing -->
+
+        <!-- Credit Card -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Credit Card </h3> 
+          <?php echo Form::checkbox('has_cc', '1', null, [ 'id' => 'has_cc', 'class' => 'square-red' ]); ?> Check if applicable
+          <!-- <input type="checkbox" name="has_cc" id="has_cc" value="1" class="square-red" /> Check if applicable -->
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name on Card <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_name_on_cc', null, ['readonly' => true, 'id' => 'cc_name_on_cc', 'placeholder' => 'Name on Card', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_name_on_cc', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>CC# <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_no', null, ['readonly' => true, 'id' => 'cc_no', 'placeholder' => 'CC#', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_no', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>CC Billing Address <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_bill_addr', null, ['readonly' => true, 'id' => 'cc_bill_addr', 'placeholder' => 'CC Billing Address', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_bill_addr', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_city', null, ['readonly' => true, 'id' => 'cc_city', 'placeholder' => 'City', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_city', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_state', null, ['readonly' => true, 'id' => 'cc_state', 'placeholder' => 'State', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_state', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_zip', null, ['readonly' => true, 'id' => 'cc_zip', 'placeholder' => 'Zip', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_zip', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone# <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_phone', null, ['readonly' => true, 'id' => 'cc_phone', 'placeholder' => 'Phone#', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_phone', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>CVC Number <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_cvc_no', null, ['readonly' => true, 'id' => 'cc_cvc_no', 'placeholder' => 'CVC Number', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_cvc_no', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Receipt Email <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::text('cc_email', null, ['readonly' => true, 'id' => 'cc_email', 'placeholder' => 'Receipt Email', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <?php echo $errors->first('cc_email', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label style="display:block;">Expiry <small style="font-weight:normal;">(Month / Year)</small> <small><span class="req-cpcc fa fa-star red"></span></small></label>
+              <?php echo Form::selectRange('cc_exp_mm', 1, 12, null, ['readonly' => true, 'style' => 'width:auto;display:inline-block;', 'id' => 'cc_exp_mm', 'placeholder' => 'Expiry Month', 'class' => 'cpcc form-control validate[required]']); ?> / 
+              <?php echo Form::selectRange('cc_exp_yy', 2015, 2030, null, ['readonly' => true, 'style' => 'width:auto;display:inline-block;', 'id' => 'cc_exp_yy', 'placeholder' => 'Expiry Year', 'class' => 'cpcc form-control validate[required]']); ?>
+
+              <br/>
+              <?php echo $errors->first('cc_exp_mm', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Credit Card -->
+
+        <!-- Purchasing Primary Contact -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Purchasing Primary Contact</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('pur_prim_name', null, ['id' => 'pur_prim_name', 'placeholder' => 'Name', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('pur_prim_name', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('pur_prim_phone', null, ['id' => 'pur_prim_phone', 'placeholder' => 'Phone', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('pur_prim_phone', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Email(s) <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('pur_prim_emails', null, ['id' => 'pur_prim_emails', 'placeholder' => 'Email(s)', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('pur_prim_emails', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Purchasing Primary Contact -->
+
+        <!-- Authorized Purchasers Contacts -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Authorized Purchasers Contacts</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-12"><h4>Contact One</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name</label>
+              <?php echo Form::text('auth_pur1_name', null, ['id' => 'auth_pur1_name', 'placeholder' => 'Name', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur1_name', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <?php echo Form::text('auth_pur1_phone', null, ['id' => 'auth_pur1_phone', 'placeholder' => 'Phone', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur1_phone', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <?php echo Form::text('auth_pur1_email', null, ['id' => 'auth_pur1_email', 'placeholder' => 'Email', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur1_email', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-12"><h4>Contact Two</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name</label>
+              <?php echo Form::text('auth_pur2_name', null, ['id' => 'auth_pur2_name', 'placeholder' => 'Name', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur2_name', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <?php echo Form::text('auth_pur2_phone', null, ['id' => 'auth_pur2_phone', 'placeholder' => 'Phone', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur2_phone', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <?php echo Form::text('auth_pur2_email', null, ['id' => 'auth_pur2_email', 'placeholder' => 'Email', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur2_email', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-12"><h4>Contact Three</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Name</label>
+              <?php echo Form::text('auth_pur3_name', null, ['id' => 'auth_pur3_name', 'placeholder' => 'Name', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur3_name', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phone</label>
+              <?php echo Form::text('auth_pur3_phone', null, ['id' => 'auth_pur3_phone', 'placeholder' => 'Phone', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur3_phone', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              <?php echo Form::text('auth_pur3_email', null, ['id' => 'auth_pur3_email', 'placeholder' => 'Email', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('auth_pur3_email', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Authorized Purchasers Contacts -->
+
+        <!-- Primary Shipping Address -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Primary Shipping Address</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1 <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('prim_ship_addr1', null, ['id' => 'prim_ship_addr1', 'placeholder' => 'Address 1', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('prim_ship_addr1', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2 <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('prim_ship_addr2', null, ['id' => 'prim_ship_addr2', 'placeholder' => 'Address 2', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('prim_ship_addr2', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3 <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('prim_ship_addr3', null, ['id' => 'prim_ship_addr3', 'placeholder' => 'Address 3', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('prim_ship_addr3', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('prim_ship_city', null, ['id' => 'prim_ship_city', 'placeholder' => 'City', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('prim_ship_city', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('prim_ship_state', null, ['id' => 'prim_ship_state', 'placeholder' => 'State', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('prim_ship_state', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('prim_ship_zip', null, ['id' => 'prim_ship_zip', 'placeholder' => 'Zip', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('prim_ship_zip', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Primary Shipping Address -->
+
+        <!-- Secondary Shipping Address -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Secondary Shipping Address</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 1</label>
+              <?php echo Form::text('sec_ship_addr1', null, ['id' => 'sec_ship_addr1', 'placeholder' => 'Address 1', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('sec_ship_addr1', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 2</label>
+              <?php echo Form::text('sec_ship_addr2', null, ['id' => 'sec_ship_addr2', 'placeholder' => 'Address 2', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('sec_ship_addr2', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Address 3</label>
+              <?php echo Form::text('sec_ship_addr3', null, ['id' => 'sec_ship_addr3', 'placeholder' => 'Address 3', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('sec_ship_addr3', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>City</label>
+              <?php echo Form::text('sec_ship_city', null, ['id' => 'sec_ship_city', 'placeholder' => 'City', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('sec_ship_city', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>State</label>
+              <?php echo Form::text('sec_ship_state', null, ['id' => 'sec_ship_state', 'placeholder' => 'State', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('sec_ship_state', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Zip</label>
+              <?php echo Form::text('sec_ship_zip', null, ['id' => 'sec_ship_zip', 'placeholder' => 'Zip', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('sec_ship_zip', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Secondary Shipping Address -->
+
+        <!-- Payments, Taxes, and Invoicing -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Payments, Taxes, and Invoicing</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Tax ID # <small><span class="fa fa-star red"></span></small></label>
+              <?php echo Form::text('tax_id_no', null, ['id' => 'tax_id_no', 'placeholder' => 'Tax ID #', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('tax_id_no', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <!-- <div class="col-md-12">
+            <label>Please indicate if you will accept EFT payments to E2E. If so, bank account information will be supplied upon confirmation.</label>
+            <div class="col-md-3">
+              <div class="form-group">
+                <input type="checkbox" name="qwe" value="1" class="square-red" /> &nbsp; Yes
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <input type="checkbox" name="asd" value="0" class="square-red" /> &nbsp; No
+              </div>
+            </div>
+          </div> -->
+
+          <div class="col-md-12">
+            <label>Please indicate if you will accept EFT payments to E2E. If so, bank account information will be supplied upon confirmation.</label>
+            <div class="form-group">
+              <?php echo Form::radio('accept_eft', '1', null, [ 'id' => 'accept_eft_1', 'class' => 'square-red' ]); ?> Yes &nbsp; &nbsp; &nbsp; 
+              <?php echo Form::radio('accept_eft', '0', null, [ 'id' => 'accept_eft_0', 'class' => 'square-red' ]); ?> No
+
+              <!-- <input type="radio" name="accept_eft" id="accept_eft_1" value="1" class="square-red rd_accinfo" /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="accept_eft" id="accept_eft_0" value="0" class="square-red rd_accinfo" /> No -->
+            </div>
+          </div>
+
+          <div class="col-md-12"><h4>Bank Account Information</h4></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Name <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_bank_name', null, ['id' => 'eft_bank_name', 'placeholder' => 'Bank Name', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_bank_name', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Address 1 <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_bank_addr1', null, ['id' => 'eft_bank_addr1', 'placeholder' => 'Bank Address 1', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_bank_addr1', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Address 2 <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_bank_addr2', null, ['id' => 'eft_bank_addr2', 'placeholder' => 'Bank Address 2', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_bank_addr2', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank City <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_bank_city', null, ['id' => 'eft_bank_city', 'placeholder' => 'Bank City', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_bank_city', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank State <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_bank_state', null, ['id' => 'eft_bank_state', 'placeholder' => 'Bank State', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_bank_state', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Bank Routing <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_bank_routing', null, ['id' => 'eft_bank_routing', 'placeholder' => 'Bank Routing', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_bank_routing', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Name <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_acc_name', null, ['id' => 'eft_acc_name', 'placeholder' => 'Account Name', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_acc_name', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Account Number <small><span class="req-accinfo fa fa-star red"></span></small></label>
+              <?php echo Form::text('eft_acc_no', null, ['id' => 'eft_acc_no', 'placeholder' => 'Account Number', 'class' => 'accinfo form-control validate[required]']); ?>
+
+              <?php echo $errors->first('eft_acc_no', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <label>Can invoices and credit card receipts be emailed?</label> 
+            <div class="form-group">
+              <?php echo Form::radio('email_inv', '1', null, [ 'id' => 'email_inv_1', 'class' => 'square-red' ]); ?> Yes &nbsp; &nbsp; &nbsp; 
+              <?php echo Form::radio('email_inv', '0', null, [ 'id' => 'email_inv_0', 'class' => 'square-red' ]); ?> No
+
+              <!-- <input type="radio" name="email_inv" id="email_inv_1" value="1" class="square-red" /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="email_inv" id="email_inv_0" value="0" class="square-red" /> No -->
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email <small><span class="req-emailinv fa fa-star red"></span></small></label>
+              <?php echo Form::text('email_inv_to', null, ['id' => 'email_inv_to', 'placeholder' => 'Receiving Email Address', 'class' => 'form-control validate[required]']); ?>
+
+              <?php echo $errors->first('email_inv_to', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-6">
+            <label>Can multiple invoices be processed in single credit card transaction?</label> 
+            <div class="form-group">
+              <?php echo Form::radio('proc_multi_inv', '1', null, [ 'id' => 'proc_multi_inv_1', 'class' => 'square-red' ]); ?> Yes &nbsp; &nbsp; &nbsp; 
+              <?php echo Form::radio('proc_multi_inv', '0', null, [ 'id' => 'proc_multi_inv_0', 'class' => 'square-red' ]); ?> No
+
+              <!-- <input type="radio" name="proc_multi_inv" id="proc_multi_inv_1" value="1" class="square-red" /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="proc_multi_inv" id="proc_multi_inv_0" value="0" class="square-red" /> No -->
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label>Can E2E take orders via email?</label> 
+            <div class="form-group">
+              <?php echo Form::radio('order_via_email', '1', null, [ 'id' => 'order_via_email_1', 'class' => 'square-red' ]); ?> Yes &nbsp; &nbsp; &nbsp; 
+              <?php echo Form::radio('order_via_email', '0', null, [ 'id' => 'order_via_email_0', 'class' => 'square-red' ]); ?> No
+              <!-- <input type="radio" name="order_via_email" id="order_via_email_1" value="1" class="square-redd" /> Yes &nbsp; &nbsp; &nbsp; 
+              <input type="radio" name="order_via_email" id="order_via_email_0" value="0" class="square-redd" /> No -->
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Other Notes</label> 
+              <!-- <textarea name="other_notes" id="other_notes" class="form-control" rows="3" placeholder="Other Notes"></textarea> -->
+              <?php echo Form::textarea('other_notes', null, ['id' => 'other_notes', 'placeholder' => 'Other Notes', 'class' => 'form-control', 'rows' => '3']); ?>
+
+              <?php echo $errors->first('other_notes', '<span class="validation-error">:message</span>'); ?>
+
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Payments, Taxes, and Invoicing -->
+
+        <!-- Contact -->
+        <div class="box-header with-border">
+          <h3 class="box-title">E2E Customer Service, Orders, and Account Receivables</h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <h4>End 2 End Technologies HQ</h4>
+              <h4>60 Sycamore Street West</h4>
+              <h4>St. Paul, MN  55117</h4>
+              <h4><a href="http://www.e2etechinc.com" target="_blank">http://www.e2etechinc.com</a></h4>
+              <h4>Phone: 651-560-0321</h4>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <h4 class="hidden-md hidden-lg">&nbsp;</h4>
+              <h4>End 2 End Technologies Warehouse</h4>
+              <h4>1017 South Kansas Avenue</h4>
+              <h4>Liberal, Kansas 67901</h4>
+              <h4><a href="mailto:orders@e2etechinc.com" target="_blank">orders@e2etechinc.com</a></h4>
+            </div>
+          </div>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Contact -->
+
+
+
+
+
+        <div class="box-body">
+
+          <div class="box-footer" style="padding: 10px 15px;">
+
+            <?php echo Form::submit('  Save  ', ['id' => 'btnSave', 'name' => 'btnSave', 'class' => 'btn btn-primary']); ?> &nbsp; 
+            <input value=" Back " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('onboarding.index'); ?>'" />
+          </div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /search form -->
+      <?php echo Form::close(); ?>
+
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

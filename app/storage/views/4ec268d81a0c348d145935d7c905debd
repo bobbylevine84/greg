@@ -1,0 +1,232 @@
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, res) {
+        return res;
+      }
+    });
+
+    // styled checkboxes
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].square-red').iCheck({
+      checkboxClass: 'icheckbox_square-red'
+    });
+
+
+    $('#var_id').on('change', function() {
+      if($(this).val() && confirm('Fetch VAR contact email?')) {
+        var u = "<?php echo e(URL::route('lead.varemail')); ?>";
+        var vid = $(this).val();
+        $.post(u, { vid:vid }, function(data) {
+          if(data.status == 'success') {
+            $('#noti_email').val(data.payload);
+          }
+        });
+      }
+    });
+
+  });
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('hassets'); ?>
+  <!-- For iCheckbox -->
+  <?php echo HTML::style('public/plugins/iCheck/all.css', array('type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footscripts'); ?>
+  <!-- iCheck 1.0.1 -->
+  <?php echo HTML::script('public/plugins/iCheck/icheck.min.js', array('type' => 'text/javascript')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Lead <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <?php echo Form::model( $record, array('id' => 'frmRecord', 'route' => 'lead.store', 'method' => 'post', 'autocomplete' => 'off') ); ?>
+
+
+        <!-- search form -->
+        <!-- general form elements disabled -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Register New Lead</h3> &nbsp; (<small><span class="fa fa-star red"> required field</span></small>)
+          </div><!-- /.box-header -->
+          <div class="box-body">
+
+            <!-- text input -->
+            <?php if($myApp->utype=='SUADMIN'): ?>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Select VAR Account</label>
+                  <?php echo Form::select('var_id', $vars, null, ['id' => 'var_id', 'placeholder' => 'Select VAR Account', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('var_id', '<span class="validation-error">:message</span>'); ?>
+
+                </div>
+              </div>
+            <?php endif; ?>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Company Name &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('comp_name', null, ['id' => 'comp_name', 'placeholder' => 'Lead Company Name', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('comp_name', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Status</label>
+                <?php echo $record->beautifyStatus(); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Lead Company Address </label>
+                  <?php echo Form::textarea('comp_address', null, ['id' => 'comp_address', 'rows' => '3', 'placeholder' => 'Lead Company Address', 'class' => 'form-control']); ?>
+
+                  <?php echo $errors->first('comp_address', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Company City &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('comp_city', null, ['id' => 'comp_city', 'placeholder' => 'Lead Company City', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('comp_city', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Company State &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('comp_state', null, ['id' => 'comp_state', 'placeholder' => 'Lead Company State', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('comp_state', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Contact Name </label>
+                  <?php echo Form::text('con_name', null, ['id' => 'con_name', 'placeholder' => 'Lead Contact Name', 'class' => 'form-control']); ?>
+
+                  <?php echo $errors->first('con_name', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Project Name &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('proj_name', null, ['id' => 'proj_name', 'placeholder' => 'Lead Project Name', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('proj_name', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Notification Email &nbsp; <small><span class="fa fa-star red"></span></small></label>
+                  <?php echo Form::text('noti_email', null, ['id' => 'noti_email', 'placeholder' => 'Lead Notification Email', 'class' => 'form-control validate[required]']); ?>
+
+                  <?php echo $errors->first('noti_email', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Billing -->
+
+        <!-- Industries -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Lead Product </h3> <small><span class="fa fa-star red"></span> (Select atleast one)</small>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+            <div class="col-md-12">
+              <div class="form-group">
+
+                <?php foreach($prods as $pid => $pnm): ?>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <?php echo Form::checkbox('prod_ids[]', $pid, false, [ 'class' => 'square-red' ]); ?> <?php echo $pnm; ?>
+
+                    </div>
+                  </div>
+
+                <?php endforeach; ?>
+                <div class="clr"></div>
+                <?php echo $errors->first('prod_ids', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Lead Notes </label>
+                <?php echo Form::textarea('notes', null, ['id' => 'notes', 'rows' => '3', 'placeholder' => 'Lead Notes', 'class' => 'form-control']); ?>
+
+                <?php echo $errors->first('notes', '<span class="validation-error">:message</span>'); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="box-footer" style="padding: 15px 15px;">
+
+              <?php echo Form::submit('  Save  ', ['id' => 'btnSave', 'name' => 'btnSave', 'class' => 'btn btn-primary']); ?> &nbsp; 
+              <input value=" Back " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('lead.index'); ?>'" /> &nbsp;  &nbsp; 
+            </div>
+
+          
+          </div><!-- /.box-body -->
+        </div><!-- /.box -->
+        <!-- /search form -->
+      <?php echo Form::close(); ?>
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

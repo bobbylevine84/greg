@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="mds-if-nx"
+        xmlns="urn:ietf:params:xml:ns:yang:yin:1"
+        xmlns:mds_nx="com:gemds:netmanager">
+  <namespace uri="com:gemds:netmanager"/>
+  <prefix value="mds_nx"/>
+  <import module="mds-certmgr">
+    <prefix value="mdscert"/>
+  </import>
+  <import module="ietf-interfaces">
+    <prefix value="if"/>
+  </import>
+  <import module="mds-if-type">
+    <prefix value="mdsift"/>
+  </import>
+  <import module="mds-if-bond">
+    <prefix value="mds_bond"/>
+  </import>
+  <import module="mds-if-nx-common">
+    <prefix value="mds_nx_common"/>
+  </import>
+  <import module="mds-if-nx-status">
+    <prefix value="mds_nx_status"/>
+  </import>
+  <organization>
+    <text>GE MDS LLC</text>
+  </organization>
+  <contact>
+    <text>GE MDS</text>
+  </contact>
+  <description>
+    <text>This module contains a collection of YANG definitions for
+NX915 devices found in MDS products.
+
+Copyright (c) 2013 GE MDS.  All rights reserved.</text>
+  </description>
+  <revision date="2015-08-14">
+    <description>
+      <text>Set units to uniform style.</text>
+    </description>
+  </revision>
+  <revision date="2015-04-13">
+    <description>
+      <text>Changed path for certificates.</text>
+    </description>
+  </revision>
+  <revision date="2015-03-27">
+    <description>
+      <text>Moved some parameters common to narrowband out to mds-nx-common</text>
+    </description>
+  </revision>
+  <revision date="2015-02-11">
+    <description>
+      <text>Use encryption-protocol 1.0 by default.</text>
+    </description>
+  </revision>
+  <revision date="2014-09-26">
+    <description>
+      <text>Add option allow-retransmit.  This will prevent remote from remote traffic from being sent.</text>
+    </description>
+  </revision>
+  <revision date="2014-05-29">
+    <description>
+      <text>Refactor to suport SNMP, add ADR parameters.</text>
+    </description>
+  </revision>
+  <revision date="2014-02-12">
+    <description>
+      <text>Changed channel list frequencies to string type.</text>
+    </description>
+  </revision>
+  <revision date="2014-02-04">
+    <description>
+      <text>Made modifications to the active channels information</text>
+    </description>
+  </revision>
+  <revision date="2014-01-27">
+    <description>
+      <text>Added AP Information DB. Added remote and endpoint age time.
+Updated description text fields.</text>
+    </description>
+  </revision>
+  <revision date="2014-01-17">
+    <description>
+      <text>Fix spelling of frequencies in help strings. Added Average
+RSSI and Average LQI performace info to connected remotes DB.</text>
+    </description>
+  </revision>
+  <revision date="2013-12-19">
+    <description>
+      <text>Rework of DBs. Fixed NIC alarm values.</text>
+    </description>
+  </revision>
+  <revision date="2013-12-13">
+    <description>
+      <text>Updated pki container elements to use a reference to mdscert.</text>
+    </description>
+  </revision>
+  <revision date="2013-11-21">
+    <description>
+      <text>Added compression to the data model.</text>
+    </description>
+  </revision>
+  <revision date="2013-11-07">
+    <description>
+      <text>Complete refactor of the data model to include advanced 
+configuration and standard naming conventions.</text>
+    </description>
+  </revision>
+  <revision date="2013-11-04">
+    <description>
+      <text>Added security parameters.</text>
+    </description>
+  </revision>
+  <revision date="2013-10-22">
+    <description>
+      <text>Move to standard IETF interfaces-state table. Fixed some 
+descriptions.</text>
+    </description>
+  </revision>
+  <revision date="2013-10-09">
+    <description>
+      <text>Fixed spelling error and included support for automatic modem.</text>
+    </description>
+  </revision>
+  <revision date="2013-09-23">
+    <description>
+      <text>Moved enums to typedefs, changed a mandatory to a must statment, 
+added active channels table, and deprecated hop_mask for 
+avoided_frequencies</text>
+    </description>
+  </revision>
+  <revision date="2013-08-29">
+    <description>
+      <text>Added power and hop_set leafs.  Added the endpoints table.</text>
+    </description>
+  </revision>
+  <revision date="2013-07-18">
+    <description>
+      <text>Added data_retries.</text>
+    </description>
+  </revision>
+  <revision date="2013-07-12">
+    <description>
+      <text>Baseline revision for release.</text>
+    </description>
+  </revision>
+  <revision date="2013-01-08">
+    <description>
+      <text>Initial revision.</text>
+    </description>
+  </revision>
+  <identity name="nx">
+    <base name="mdsift:interface-type"/>
+    <description>
+      <text>NX915 Radio</text>
+    </description>
+  </identity>
+  <typedef name="hop-set-type">
+    <type name="enumeration">
+      <enum name="a">
+        <description>
+          <text>The first group of frequencies</text>
+        </description>
+      </enum>
+      <enum name="b">
+        <description>
+          <text>The second group of frequencies</text>
+        </description>
+      </enum>
+      <enum name="c">
+        <description>
+          <text>The third group of frequencies</text>
+        </description>
+      </enum>
+      <enum name="d">
+        <description>
+          <text>The fourth group of frequencies</text>
+        </description>
+      </enum>
+      <enum name="e">
+        <description>
+          <text>The fifth group of frequencies</text>
+        </description>
+      </enum>
+      <enum name="f">
+        <description>
+          <text>The sixth group of frequencies</text>
+        </description>
+      </enum>
+      <enum name="auto">
+        <value value="10"/>
+        <description>
+          <text>Automaticly selects the group with the most avaiable 
+frequencies</text>
+        </description>
+      </enum>
+    </type>
+    <description>
+      <text>Types of hop sets</text>
+    </description>
+  </typedef>
+  <augment target-node="/if:interfaces/if:interface">
+    <when condition="if:type = 'mds_nx:nx'"/>
+    <description>
+      <text>Add support for GE MDS NX interfaces</text>
+    </description>
+    <container name="nx-config">
+      <must condition="not (current()/../if:type = 'mds_nx:nx') or device-mode">
+        <error-message>
+          <value>nx-config/device-mode must be configured for 
+nx devices</value>
+        </error-message>
+      </must>
+      <must condition="not (modem-mode='auto' and device-mode='access-point')">
+        <error-message>
+          <value>The access point must specify a specific modem</value>
+        </error-message>
+      </must>
+      <must condition="not (current()/../if:name = /if:interfaces/if:interface[if:name != current()/../if:name]/mds_bond:bond-config/mds_bond:member/mds_bond:interface and device-mode='access-point')">
+        <error-message>
+          <value>NX in access-point mode cannot be added to a bond interface.</value>
+        </error-message>
+      </must>
+      <presence value="NX Configuration"/>
+      <description>
+        <text>The configuration of the GE MDS NX interface</text>
+      </description>
+      <leaf name="modem-mode">
+        <type name="mds_nx_common:modem-type"/>
+        <default value="500kbps"/>
+        <description>
+          <text>Controls the target throughput of the radio</text>
+        </description>
+      </leaf>
+      <leaf name="device-mode">
+        <type name="mds_nx_common:device-type"/>
+        <description>
+          <text>Sets the role the radio will assume in the network.</text>
+        </description>
+      </leaf>
+      <uses name="mds_nx_common:nx-basic-parms"/>
+      <leaf name="power">
+        <type name="int8">
+          <range value="20..30"/>
+        </type>
+        <units name="dBm"/>
+        <default value="30"/>
+        <description>
+          <text>The transmit power of the radio</text>
+        </description>
+      </leaf>
+      <leaf name="radio-mode">
+        <type name="enumeration">
+          <enum name="mac1">
+            <value value="1"/>
+            <description>
+              <text>Sets the NIC to use MAC 1 profile</text>
+            </description>
+          </enum>
+        </type>
+        <default value="mac1"/>
+        <description>
+          <text>Controls the operating mode of the NIC</text>
+        </description>
+      </leaf>
+      <leaf name="dwell-time">
+        <type name="uint16">
+          <range value="10..400"/>
+        </type>
+        <units name="milliseconds"/>
+        <default value="50"/>
+        <description>
+          <text>Time spent on a channel</text>
+        </description>
+      </leaf>
+      <leaf name="beacon-interval">
+        <type name="uint16">
+          <range value="10..300"/>
+        </type>
+        <units name="milliseconds"/>
+        <default value="150"/>
+        <description>
+          <text>Synchronization beacon transmit interval</text>
+        </description>
+      </leaf>
+      <leaf name="hop-set">
+        <type name="hop-set-type"/>
+        <default value="a"/>
+        <description>
+          <text>The hop set of the radio</text>
+        </description>
+      </leaf>
+      <container name="security">
+        <must condition="encryption='none' or security-mode!='none'">
+          <error-message>
+            <value>Encryption requires a security mode other than
+none.</value>
+          </error-message>
+        </must>
+        <must condition="passphrase or security-mode!='psk'">
+          <error-message>
+            <value>PSK mode reqires a passphrase.</value>
+          </error-message>
+        </must>
+        <description>
+          <text>The security configuration of the interface</text>
+        </description>
+        <uses name="mds_nx_common:nx-security-parms"/>
+        <container name="pki">
+          <description>
+            <text>The public key infrastructure used by EAP-TLS</text>
+          </description>
+          <leaf name="cert-id">
+            <type name="string"/>
+            <description>
+              <text>certificate identifier</text>
+            </description>
+          </leaf>
+          <leaf name="key-id">
+            <type name="string"/>
+            <description>
+              <text>private key identifier</text>
+            </description>
+          </leaf>
+          <leaf name="ca-cert-id">
+            <type name="string"/>
+            <description>
+              <text>ca-certificate chain identifier</text>
+            </description>
+          </leaf>
+        </container>
+      </container>
+      <container name="advanced-config">
+        <description>
+          <text>The advanced configuration of the interface</text>
+        </description>
+        <leaf name="lna-state">
+          <type name="enumeration">
+            <enum name="high-immunity">
+              <value value="0"/>
+              <description>
+                <text>Beter performance in high noise envirnoment</text>
+              </description>
+            </enum>
+            <enum name="high-sensitivity">
+              <value value="1"/>
+              <description>
+                <text>Beter performance in low noise envirnoment</text>
+              </description>
+            </enum>
+          </type>
+          <default value="high-sensitivity"/>
+          <description>
+            <text>Controls the low noise amplifier</text>
+          </description>
+        </leaf>
+        <leaf-list name="avoided-frequencies">
+          <type name="string">
+            <pattern value="\d{3}(\.\d{1,4})?\s?-\s?\d{3}(\.\d{1,4})?"/>
+          </type>
+          <max-elements value="50"/>
+          <description>
+            <text>Frequencies that are not included in the hop pattern</text>
+          </description>
+        </leaf-list>
+        <leaf name="stale-packet-timeout">
+          <type name="uint16"/>
+          <units name="milliseconds"/>
+          <default value="1500"/>
+          <description>
+            <text>If the MAC is unable to transmit a packet in this time, 
+it will drop the packet.</text>
+          </description>
+        </leaf>
+        <leaf name="propagation-delay">
+          <type name="enumeration">
+            <enum name="20miles">
+              <value value="0"/>
+              <description>
+                <text>Corection based on 20 mile speed of light delay</text>
+              </description>
+            </enum>
+            <enum name="40miles">
+              <value value="1"/>
+              <description>
+                <text>Corection based on 40 mile speed of light delay</text>
+              </description>
+            </enum>
+            <enum name="60miles">
+              <value value="2"/>
+              <description>
+                <text>Corection based on 60 mile speed of light delay</text>
+              </description>
+            </enum>
+          </type>
+          <default value="40miles"/>
+          <description>
+            <text>Correction for the propagation delay of the RF signal.</text>
+          </description>
+        </leaf>
+        <leaf name="mcast-repeat">
+          <type name="uint8"/>
+          <default value="3"/>
+          <description>
+            <text>Number of times to repeat downstream broadcast and 
+multicast data.</text>
+          </description>
+        </leaf>
+        <leaf name="data-retries">
+          <type name="uint8">
+            <range value="0..15"/>
+          </type>
+          <default value="3"/>
+          <description>
+            <text>Number of times to retry unicast data before declaring NACK.</text>
+          </description>
+        </leaf>
+        <leaf name="nic-id">
+          <type name="uint16">
+            <range value="0 | 400..500"/>
+          </type>
+          <default value="0"/>
+          <description>
+            <text>Manual overrides of the NIC identifier</text>
+          </description>
+        </leaf>
+        <leaf name="gateway-id">
+          <type name="uint16">
+            <range value="0 | 400..max"/>
+          </type>
+          <default value="0"/>
+          <description>
+            <text>Manual overrides of the NIC's gateway identifier</text>
+          </description>
+        </leaf>
+        <leaf name="fragment-threshold">
+          <type name="uint16">
+            <range value="0 | 50..1500"/>
+          </type>
+          <default value="0"/>
+          <description>
+            <text>Fragmentation threshold</text>
+          </description>
+        </leaf>
+        <uses name="mds_nx_common:remote-db-mgmt">
+          <refine target-node="remote-age-time"/>
+        </uses>
+        <leaf name="adr-mode">
+          <type name="enumeration">
+            <enum name="none">
+              <value value="0"/>
+              <description>
+                <text>No adaptive data rate.</text>
+              </description>
+            </enum>
+            <enum name="125-250kbps">
+              <value value="1"/>
+              <description>
+                <text>Adaptive data rate between modems 125 and 250kbps.</text>
+              </description>
+            </enum>
+            <enum name="500-1250kbps">
+              <value value="2"/>
+              <description>
+                <text>Adaptive data rate between modems 500 and 1250kbps.</text>
+              </description>
+            </enum>
+          </type>
+          <default value="none"/>
+          <description>
+            <text>Adaptive Data Rate will change the modem to attempt to get the best
+throughput, for a given network.</text>
+          </description>
+        </leaf>
+        <leaf name="adr-threshold">
+          <type name="int8">
+            <range value="-127..0"/>
+          </type>
+          <default value="-70"/>
+          <description>
+            <text>Adaptive Data Rate Threshold.  If signal is stronger
+than threshold the faster data rate setting will be used.</text>
+          </description>
+        </leaf>
+        <leaf name="encryption-protocol">
+          <type name="enumeration">
+            <enum name="2.0">
+              <value value="0"/>
+            </enum>
+            <enum name="1.0">
+              <value value="1"/>
+            </enum>
+          </type>
+          <default value="1.0"/>
+          <description>
+            <text>Set this to 1.0 when migrating remote network to new security protocol</text>
+          </description>
+        </leaf>
+      </container>
+    </container>
+  </augment>
+  <augment target-node="/if:interfaces-state/if:interface">
+    <when condition="if:type = 'mds_nx:nx'"/>
+    <description>
+      <text>Add support for GE MDS NX interfaces</text>
+    </description>
+    <container name="nx-status">
+      <config value="false"/>
+      <description>
+        <text>The status of the GE MDS NX interface</text>
+      </description>
+      <uses name="mds_nx_status:nx-status">
+        <refine target-node="link-status"/>
+        <refine target-node="ap-info"/>
+        <refine target-node="connected-remotes"/>
+        <refine target-node="endpoints"/>
+        <refine target-node="active-channels"/>
+      </uses>
+      <container name="test">
+        <leaf name="test-mode-time">
+          <type name="uint32"/>
+          <units name="minutes"/>
+          <description>
+            <text>The number of minutes left of test mode</text>
+          </description>
+        </leaf>
+        <list name="spectrum-analyzer">
+          <key value="channel"/>
+          <leaf name="channel">
+            <type name="uint8"/>
+          </leaf>
+          <leaf name="frequency">
+            <type name="string"/>
+            <units name="MHz"/>
+          </leaf>
+          <leaf name="current">
+            <type name="int8"/>
+            <description>
+              <text>The power sampled on the channel</text>
+            </description>
+          </leaf>
+          <leaf name="max-hold">
+            <type name="int8"/>
+            <description>
+              <text>The strongest signal detected on the channel</text>
+            </description>
+          </leaf>
+          <leaf name="average">
+            <type name="int8"/>
+            <description>
+              <text>The average signal detected on the channel</text>
+            </description>
+          </leaf>
+        </list>
+      </container>
+    </container>
+  </augment>
+</module>

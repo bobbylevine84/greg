@@ -1,0 +1,56 @@
+<?php $__env->startSection('content'); ?>
+	<?php
+	echo '<pre>';
+	print_r($locations);
+	echo '</pre>';
+	?>
+
+<h3 class="tit">Table</h3>
+<table class="wd100pr">
+	<tbody><tr>
+	  <th>Lorem ipsum</th>
+	  <th>Lorem ipsum</th>
+	  <th>Lorem ipsum</th>
+	  <th>Lorem ipsum</th>
+	  <th>Lorem ipsum</th>
+	</tr>
+	<tr>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	</tr>
+	<tr class="bg">
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	</tr>
+	<tr>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	</tr>
+	<tr class="bg">
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	</tr>
+	<tr>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	  <td>Lorem ipsum</td>
+	</tr>
+  </tbody>
+</table>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

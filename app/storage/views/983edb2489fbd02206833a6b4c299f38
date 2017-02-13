@@ -1,0 +1,334 @@
+<?php $__env->startSection('headscripts'); ?>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+      function getLocationDetails(rid) {
+        var url = "<?php echo URL::to('appuser/locationdetails'); ?>";
+        $.get(url, {rid:rid}, function(data) {
+
+          if(data=='NOTLOGGEDIN') {
+            window.location.href = "<?php echo URL::to('login'); ?>";
+            return false;
+          }
+
+          $('#tbl-loc-detail-data').html(data);
+          $('#loc-det-loader').hide();
+          $('#tbl-loc-detail-data').css('opacity', '1');
+          checkAndDrawMap();
+        }, "html");
+      }
+
+      function checkAndDrawMap() {
+        $('#tr-map-wrapper').hide();
+        var ltn = $('#ltln').val();
+        if($.trim(ltn)!='') drawMap(ltn);
+      }
+
+      function drawMap(loc) {
+        //var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+        //var myLatlng = new google.maps.LatLng(41.850033,-87.65005229999997); // london : 51.50735,-0.12776
+        loc = loc.split(',');
+        var myLatlng = new google.maps.LatLng(loc[0], loc[1]);
+
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'latLng': myLatlng}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            $('#tr-map-wrapper').show();
+            //alert(results[0].formatted_address);
+            var mapOptions = {
+              zoom: 14,
+              center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
+          }
+          else {
+            //$('#tr-map-wrapper').hide();
+            alert("Place not found on Map.");
+          }
+        });
+
+          // var marker = new google.maps.Marker({
+          //     position: myLatlng,
+          //     map: map,
+          //     title: 'Hello World! \n Good Going!'
+          // });
+      }
+
+      //google.maps.event.addDomListener(window, 'load', drawMap);
+
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('lassets'); ?>
+  <?php echo HTML::script('public/plugins/slimScroll/jquery.slimscroll.min.js', array('type' => 'text/javascript')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+
+    //$('#location-scroll').slimScroll({
+    //  height: '475px',
+    //  alwaysVisible: 'true'
+    //});
+
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, res) {
+        return res;
+      }
+    });
+
+    $(document).on('click', '.loc-list-item', function() {
+      $('.loc-list-item').removeClass('selected');
+      $(this).addClass('selected');
+      $('#tbl-loc-detail-data').css('opacity', '0.2');
+      $('#loc-det-loader').show();
+      getLocationDetails($(this).data('rid'));
+    });
+
+    $(document).on('click', '#refresh-list', function(e) {
+      e.preventDefault();
+      $('#td-location-list').css('opacity', '0.2');
+      $('#loc-list-loader').show();
+
+      var url = "<?php echo URL::to('appuser/locationlist/'.$record->app_username); ?>";
+      $.get(url, {}, function(data, status) {
+
+        if(data=='NOTLOGGEDIN') {
+          window.location.href = "<?php echo URL::to('login'); ?>";
+          return false;
+        }
+
+        $('#td-location-list').html(data);
+
+        $('.loc-list-item:first').click();
+
+        $('#loc-list-loader').hide();
+        $('#td-location-list').css('opacity', '1');
+      }, "html");
+
+    });
+
+    $('.loc-list-item:first').click();
+
+  });
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> App User <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- user details -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">App User Details</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <!-- text input -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Name</label>
+                <span class="form-control"><?php echo $record->name; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Email</label>
+                <span class="form-control"><?php echo $record->app_user_email; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Group ID</label>
+                <span class="form-control"><?php echo $record->app_user_groupid; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Device ID</label>
+                <span class="form-control"><?php echo $record->udid; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Registered Since</label>
+                <span class="form-control"><?php echo $record->created_at_us_format; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /user details -->
+
+      <!-- device information -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Device Information</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+
+          <?php if($record->device && $record->device->device_data): ?>
+            <?php foreach($record->device->device_data as $fld => $val): ?>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label><?php echo $fld; ?></label>
+                  <span class="form-control"><?php echo $val; ?></span>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>No Device Information found.</label>
+              </div>
+            </div>
+          <?php endif; ?>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /device information -->
+
+      <!-- location information -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Location Information</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+
+          <?php if($locations && count($locations)>0): ?>
+
+            <!-- location item list -->
+            <div class="col-md-6">
+              <div id="td-location-list">
+                <table class="table table-bordered table-striped no-margin">
+                  <caption><b>List &nbsp; <span id="refresh-list" class="fa fa-refresh icon-action" title="Refresh"></span></b></caption>
+                  <tr>
+                    <th width="20%">#</th>
+                    <th width="45%">Date Time</th>
+                    <th width="35%" align="center">Network?</th>
+                  </tr>
+                </table>
+
+                <div id="location-scroll">
+
+                  <table class="table table-bordered table-striped table-hover no-margin" id="tblloc-list">
+
+                    <?php $k = 1; ?>
+                    <?php foreach($locations as $loc): ?>
+                      <tr data-rid="<?php echo $loc->rec_id; ?>" class="loc-list-item" title="View Details">
+                        <td width="20%"><?php echo $k; ?></td>
+                        <td width="45%"><?php echo $loc->time_stamp; ?></td>
+                        <td width="35%" align="center"><?php echo $loc->net_connect; ?></td>
+                      </tr>
+                    <?php $k++; ?>
+                    <?php endforeach; ?>
+
+                  </table>
+                </div>
+              </div>
+
+              <div class="overlay" id="loc-list-loader" style="display:none;">
+                <i class="fa fa-spinner fa-spin"></i>
+              </div>
+
+            </div><!-- /location item list -->
+
+            <!-- location item detail -->
+            <div class="col-md-6">
+
+
+              <?php $fLoc = $locations->first(); ?>
+              <div id="location-details">
+                <table id="tbl-loc-detail-data" class="table table-bordered table-striped">
+                  <caption><b>Details</b></caption>
+                  <?php if($fLoc && $fLoc->location_data): ?>
+
+                    <?php $k = 0; ?>
+                    <?php foreach($fLoc->location_data as $fld => $val): ?>
+                      <tr>
+                        <td width="45%"><b><?php echo $fld; ?>:</b></td>
+                        <td><?php echo $val; ?></td>
+                      </tr>
+                      <?php $k++; ?>
+                    <?php endforeach; ?>
+                    <?php if($fLoc->lat_lng): ?>
+                      <tr id="tr-map-wrapper" style="display:none;">
+                        <td colspan="2" style="padding: 0px !important;">
+                          <input type="hidden" id="ltln" value="<?php echo $fLoc->lat_lng; ?>" />
+                          <br />
+                          <div id="map-canvas"><?php echo $fLoc->lat_lng; ?></div>
+                        </td>
+                      </tr>
+                    <?php endif; ?>
+                  <?php else: ?>
+                    <tr>
+                      <td><b>No Location Information found.</b></td>
+                    </tr>
+                  <?php endif; ?>
+                </table>
+              </div>
+
+              <div class="overlay" id="loc-det-loader" style="display:none;">
+                <i class="fa fa-spinner fa-spin"></i>
+              </div>
+
+            </div><!-- location item detail -->
+
+
+          <?php else: ?>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>No Location Information found.</label>
+              </div>
+            </div>
+
+          <?php endif; ?>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /location information -->
+
+
+
+      <div class="box">
+        <div class="box-body">
+
+            <div class="box-footer no-border" style="padding: 10px 15px;">
+              <input value=" Back " name="btnBack" class="btn" type="button" onclick="window.location.href='<?php echo URL::to('appuser/groupusers'); ?>'" />
+            </div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

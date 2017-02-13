@@ -1,0 +1,122 @@
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Staging <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formsubmitalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Search</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <?php echo Form::open( array('id' => 'frmSrch', 'route' => 'provision.index', 'method' => 'post') ); ?>
+
+
+            <!-- text input -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Template Name</label>
+                <input name="srchTName" type="text" class="form-control" placeholder="Template Name"  value="<?php echo show($params, 'srchTName'); ?>"/>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Vendor Name</label>
+                <input name="srchVName" type="text" class="form-control" placeholder="Vendor Name"  value="<?php echo show($params, 'srchVName'); ?>"/>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Vendor Model Name</label>
+                <input name="srchMName" type="text" class="form-control" placeholder="Vendor Model Name"  value="<?php echo show($params, 'srchMName'); ?>"/>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="box-footer" style="padding: 10px 15px;">
+              <input value="  Search  " id="btnSearch" name="btnSearch" class="btn btn-primary" type="submit" /> &nbsp; 
+              <input value="  Clear  " name="btnClear" class="btn bg-gray" type="submit" />
+              <input type="hidden" id="srchOBy" name="srchOBy" value="<?php echo show($params, 'srchOBy'); ?>" />
+              <input type="hidden" id="srchOTp" name="srchOTp" value="<?php echo show($params, 'srchOTp'); ?>" />
+
+              <?php if($myApp->isCustAdmin): ?>
+                <input value="Add New" name="btnAdd" class="btn btn-success pull-right" type="button" onclick="window.location.href='<?php echo URL::route('provision.create'); ?>'" />
+              <?php endif; ?>
+            </div>
+
+          <?php echo Form::close(); ?>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+      <!-- /search form -->
+
+      <!-- list table -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">List</h3> <i>(Instances highlighted in pink have been released back to inventory.)</i>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th width="20%" class="orderable" data-field="tbl_template.tmpl_name">Template</th>
+              <th width="25%" class="orderable" data-field="tbl_vendor.vendor_name">Vendor</th>
+              <th width="20%" class="orderable" data-field="tbl_vendor_model.model_name">Model</th>
+              <th width="15%" class="orderable" data-field="tbl_provision.no_of_deploy">Deployments</th>
+              <th width="10%" class="orderable" data-field="tbl_provision.is_active">Active</th>
+              <?php if($myApp->isCustAdmin): ?>
+                <th width="10%">Action</th>
+              <?php endif; ?>
+            </tr>
+
+            <?php foreach($records as $k => $r): ?>
+            <tr class="<?php echo $r->status=='Released' ? 'prov-released' : ''; ?>">
+              <td><?php echo $r->tmpl_name; ?></td>
+              <td><?php echo $r->vendor_name; ?></td>
+              <td><?php echo $r->model_name; ?></td>
+              <td><?php echo $r->no_of_deploy; ?></td>
+              <td><?php echo $r->is_active; ?></td>
+              <?php if($myApp->isCustAdmin): ?>
+                <td>
+                  <?php if($r->status=='Staged'): ?>
+                    <span class="glyphicon glyphicon-ban-circle icon-action red" onclick="javascript:confirmAction('<?php echo URL::route('provision.release', $r->_id); ?>', '                  Release Inventory?\n(Only \'Staged\' inventory will be released.)')" title="Release"></span> &nbsp; &nbsp; 
+                  <?php endif; ?>
+                  <span class="glyphicon glyphicon-folder-open icon-action red" onclick="javascript:confirmAction('<?php echo URL::route('provision.archive', $r->_id); ?>', 'Archive this record?')" title="Move to Archive"></span>
+
+                  <!-- <span class="glyphicon glyphicon-edit icon-action lblue" onclick="window.location.href='{{ URL::route('provision.edit', $r->_id) }}'" title="Edit"></span> &nbsp; &nbsp;  -->
+                </td>
+              <?php endif; ?>
+            </tr>
+            <?php endforeach; ?>
+
+          </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <div class="pagination pagination-sm no-margin pull-right">
+            <?php echo $records->links(); ?>
+
+          </div>
+        </div>
+      </div><!-- /.box / list table -->
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

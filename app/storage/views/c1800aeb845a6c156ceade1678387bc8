@@ -1,0 +1,16 @@
+<div class="form-group">
+
+  <br />
+  <?php foreach($customers as $id => $nm): ?>
+    <?php $chk = is_array($selcustomers) && in_array($id, $selcustomers) ? true : false; ?>
+
+    <div class="col-md-3">
+      <div class="form-group">
+        <?php echo Form::checkbox('cust_ids[]', $id, $chk, [ 'class' => 'square-red' ]); ?> <?php echo $nm; ?>
+
+      </div>
+    </div>
+
+  <?php endforeach; ?>
+
+</div>

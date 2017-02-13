@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>E2E DCS</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <?php echo $__env->make('includes.app.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+    <?php echo $__env->yieldContent('headscripts'); ?>
+
+  </head>
+  <body class="skin-blue">
+    <div class="wrapper">
+      
+      <header class="main-header">
+        <?php echo $__env->make('includes.app.top_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+        <?php echo $__env->make('includes.app.side_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+
+        <?php echo $__env->yieldContent('content'); ?>
+
+      </div><!-- /.content-wrapper -->
+      <footer class="main-footer">
+        <?php echo $__env->make('includes.app.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+      </footer>
+    </div><!-- ./wrapper -->
+
+    <?php echo $__env->make('includes.app.footerjs', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+    <?php echo $__env->yieldContent('lassets'); ?>
+
+    <script type="text/javascript">
+      <?php echo $__env->yieldContent('lscripts'); ?>
+    </script>
+
+    <script>
+      $(document).ready(function() {
+        setTimeout(function() {
+          $('.alert-dismissable').slideUp('slow');
+        }, 6000);
+      });
+    </script>
+
+  </body>
+</html>

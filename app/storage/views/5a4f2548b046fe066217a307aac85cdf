@@ -1,0 +1,66 @@
+<caption><b>Performance Details</b></caption>
+<?php if($fPer): ?>
+
+  <tr>
+    <td width="45%"><b>Network Connected:</b></td>
+    <td><?php echo ucwords($fPer->network_connected); ?></td>
+  </tr>
+  <tr>
+    <td><b>Date Time:</b></td>
+    <td><?php echo $fPer->dt_time_us_format; ?></td>
+  </tr>
+  <tr>
+    <td><b>Battery Level:</b></td>
+    <td><?php echo $fPer->battery_level; ?></td>
+  </tr>
+  <tr>
+    <td><b>CPU Util:</b></td>
+    <td><?php echo $fPer->cpu_util; ?></td>
+  </tr>
+  <tr>
+    <td><b>Data Uploaded:</b></td>
+    <td><?php echo $fPer->data_uploaded; ?></td>
+  </tr>
+  <tr>
+    <td><b>Data Downloaded:</b></td>
+    <td><?php echo $fPer->data_downloaded; ?></td>
+  </tr>
+  <tr>
+    <td><b>Memory Util:</b></td>
+    <td><?php echo $fPer->memory_util; ?></td>
+  </tr>
+  <tr>
+    <td><b>Signal Strength:</b></td>
+    <td><?php echo $fPer->signal_strength; ?></td>
+  </tr>
+  <tr>
+    <td><b>SD Card Util:</b></td>
+    <td><?php echo $fPer->sd_card_util; ?></td>
+  </tr>
+  <tr>
+    <td><b>Temperature:</b></td>
+    <td><?php echo $fPer->temperature; ?></td>
+  </tr>
+  <tr>
+    <td><b>Water Detected:</b></td>
+    <td><?php echo $fPer->water_detected; ?></td>
+  </tr>
+  <tr>
+    <td><b>Uptime:</b></td>
+    <td><?php echo $fPer->uptime; ?></td>
+  </tr>
+
+  <?php if($fPer->latitude && $fPer->longitude): ?>
+    <tr id="tr-map-wrapper" style="display:none;">
+      <td colspan="2" style="padding: 0px !important;">
+        <input type="hidden" id="ltln" value="<?php echo $fPer->latitude . ',' . $fPer->longitude; ?>" />
+        <br />
+        <div id="map-canvas"><?php echo $fPer->latitude . ',' . $fPer->longitude; ?></div>
+      </td>
+    </tr>
+  <?php endif; ?>
+<?php else: ?>
+  <tr>
+    <td><b>No Performance Detail Information found.</b></td>
+  </tr>
+<?php endif; ?>

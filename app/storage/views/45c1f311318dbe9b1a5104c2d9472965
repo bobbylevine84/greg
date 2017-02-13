@@ -1,0 +1,25 @@
+<caption><b>Details</b></caption>
+<?php if($fLoc && $fLoc->location_data): ?>
+
+  <?php $k = 0; ?>
+  <?php foreach($fLoc->location_data as $fld => $val): ?>
+    <tr>
+      <td width="45%"><b><?php echo $fld; ?>:</b></td>
+      <td><?php echo $val; ?></td>
+    </tr>
+    <?php $k++; ?>
+  <?php endforeach; ?>
+  <?php if($fLoc->lat_lng): ?>
+    <tr id="tr-map-wrapper" style="display:none;">
+      <td colspan="2" style="padding: 0px !important;">
+        <input type="hidden" id="ltln" value="<?php echo $fLoc->lat_lng; ?>" />
+        <br />
+        <div id="map-canvas"><?php echo $fLoc->lat_lng; ?></div>
+      </td>
+    </tr>
+  <?php endif; ?>
+<?php else: ?>
+  <tr>
+    <td><b>No Location Information found.</b></td>
+  </tr>
+<?php endif; ?>

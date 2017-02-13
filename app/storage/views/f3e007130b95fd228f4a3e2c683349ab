@@ -1,0 +1,3 @@
+<?php foreach($models as $id => $nm): ?>
+  <option value="<?php echo $id; ?>" ><?php echo $nm; ?></option>
+<?php endforeach; ?>

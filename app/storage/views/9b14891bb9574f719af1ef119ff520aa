@@ -1,0 +1,13 @@
+
+<div class="navbar">
+    <div class="navbar-inner">
+    	<?php echo HTML::link('/', 'Single Malt', array('id' => 'logo')); ?>
+
+        <ul class="nav">
+            <li><?php echo HTML::link('/', 'Home'); ?></li>
+            <li><?php echo HTML::link('/about', 'About'); ?></li>
+            <li><?php echo HTML::link('/projects', 'Projects'); ?></li>
+            <li><?php echo HTML::link('/contact', 'Contact'); ?></li>
+        </ul>
+    </div>
+</div>

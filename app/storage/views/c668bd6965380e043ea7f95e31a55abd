@@ -1,0 +1,22 @@
+<p class="f-left box">
+  <!-- Switcher -->
+  <span class="f-left" id="switcher">
+	<a href="javascript:void(0);" rel="1col" class="styleswitch ico-col1" title="Display one column">
+		<?php echo HTML::image('public/assets/design/switcher-1col.gif', '1 Column'); ?>
+
+	</a> 
+	<a href="javascript:void(0)" rel="2col" class="styleswitch ico-col2" title="Display two columns">
+		<?php echo HTML::image('public/assets/design/switcher-2col.gif'); ?>
+
+	</a> 
+</span> Got Apps? Phone Tracker<strong></strong> </p>
+<p class="f-right">
+	<?php if($myApp->isSU): ?>
+		<strong><?php echo HTML::link('appsetting/index', 'Settings'); ?></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<strong><?php echo HTML::link('account/adminpassword', 'Change Password'); ?></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<?php endif; ?>
+	User: <strong><a href="#"><?php echo e($display_name); ?></a></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<strong><a href="javascript:void(0);" id="logout" onclick="confirmAction( '<?php echo e(URL::to("logout")); ?>' , 'Are you sure to Logout?')">Log Out</a></strong>
+	<!--<strong><?php echo HTML::link('/logout', 'Log Out', array('id' => 'logout')); ?></strong>
+	<strong><?php echo e(URL::to("logout")); ?></strong>-->
+</p>

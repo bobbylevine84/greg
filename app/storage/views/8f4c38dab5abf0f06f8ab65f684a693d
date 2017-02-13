@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>E2E | <?php echo $myApp->sp_title; ?></title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    <?php echo $__env->make('includes.login.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  </head>
+  <body class="login-page">
+
+    <?php echo $__env->yieldContent('content'); ?>
+
+    <?php echo $__env->make('includes.login.footerjs', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+    <script type="text/javascript">
+      <?php echo $__env->yieldContent('lscripts'); ?>
+    </script>
+
+  </body>
+</html>

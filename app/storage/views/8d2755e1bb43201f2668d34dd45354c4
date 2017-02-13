@@ -1,0 +1,5 @@
+<?php foreach(['error', 'warning', 'done', 'info'] as $msg): ?>
+  <?php if(Session::has('flash-' . $msg)): ?>
+    <p class="msg msgalert <?php echo $msg; ?>"><?php echo Session::get('flash-' . $msg); ?></p>
+  <?php endif; ?>
+<?php endforeach; ?>

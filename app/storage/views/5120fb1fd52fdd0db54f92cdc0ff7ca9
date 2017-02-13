@@ -1,0 +1,178 @@
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+
+    // styled checkboxes
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].square-red').iCheck({
+      checkboxClass: 'icheckbox_square-red'
+    });
+
+
+  });
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('hassets'); ?>
+  <!-- For iCheckbox -->
+  <?php echo HTML::style('public/plugins/iCheck/all.css', array('type' => 'text/css', 'rel' => 'stylesheet' )); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footscripts'); ?>
+  <!-- iCheck 1.0.1 -->
+  <?php echo HTML::script('public/plugins/iCheck/icheck.min.js', array('type' => 'text/javascript')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Lead <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <?php echo Form::model( $record, array('id' => 'frmRecord' ) ); ?>
+
+
+        <!-- search form -->
+        <!-- general form elements disabled -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">View Lead</h3>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+
+            <!-- text input -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Company Name</label>
+                  <span class="form-control" disabled><?php echo $record->comp_name; ?></span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Status</label>
+                <?php echo $record->beautifyStatus(); ?>
+
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Lead Company Address </label>
+                <span class="form-control" disabled><?php echo nl2br($record->comp_address); ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Company City</label>
+                <span class="form-control" disabled><?php echo $record->comp_city; ?></span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Company State</label>
+                <span class="form-control" disabled><?php echo $record->comp_state; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Contact Name </label>
+                <span class="form-control" disabled><?php echo $record->con_name; ?></span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Project Name</label>
+                <span class="form-control" disabled><?php echo $record->proj_name; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Lead Notification Email</label>
+                <span class="form-control" disabled><?php echo $record->noti_email; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+        <!-- / Billing -->
+
+        <!-- Industries -->
+        <div class="box-header with-border">
+          <h3 class="box-title">Lead Product </h3>
+        </div><!-- /.box-header -->
+
+        <div class="box-body">
+
+            <div class="col-md-12">
+              <div class="form-group">
+
+                <?php if($record->products && count($record->products)>0): ?>
+                  <?php foreach($record->products as $prod): ?>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <input type="checkbox" class="square-red" checked disabled> &nbsp; <?php echo $prod->prod_name; ?>
+
+                      </div>
+                    </div>
+
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <span class="form-control" disabled>No Products found.</span>
+                <?php endif; ?>
+
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Historical Lead Notes </label>
+                <span class="form-control ha" disabled><?php echo nl2br($record->notes_history); ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+            <div class="box-footer" style="padding: 15px 15px;">
+              <input value=" Back " name="btnExit" class="btn bg-gray" type="button" onclick="window.location.href='<?php echo URL::route('lead.index'); ?>'" /> &nbsp;  &nbsp; 
+            </div>
+
+          
+          </div><!-- /.box-body -->
+        </div><!-- /.box -->
+        <!-- /search form -->
+      <?php echo Form::close(); ?>
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

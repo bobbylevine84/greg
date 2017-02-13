@@ -1,0 +1,481 @@
+<?php $__env->startSection('headscripts'); ?>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+      function getLocationDetails(rid) {
+        var url = "<?php echo URL::to('device/performancedetails'); ?>";
+        $.get(url, {rid:rid}, function(data) {
+
+          if(data=='NOTLOGGEDIN') {
+            window.location.href = "<?php echo URL::to('login'); ?>";
+            return false;
+          }
+
+          $('#tbl-loc-detail-data').html(data);
+          $('#loc-det-loader').hide();
+          $('#tbl-loc-detail-data').css('opacity', '1');
+          checkAndDrawMap();
+        }, "html");
+      }
+
+      function checkAndDrawMap() {
+        $('#tr-map-wrapper').hide();
+        var ltn = $('#ltln').val();
+        if($.trim(ltn)!='') drawMap(ltn);
+      }
+
+      function drawMap(loc) {
+        //var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+        //var myLatlng = new google.maps.LatLng(41.850033,-87.65005229999997); // london : 51.50735,-0.12776
+        loc = loc.split(',');
+        var myLatlng = new google.maps.LatLng(loc[0], loc[1]);
+
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'latLng': myLatlng}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            $('#tr-map-wrapper').show();
+            //alert(results[0].formatted_address);
+            var mapOptions = {
+              zoom: 14,
+              center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
+          }
+          else {
+            //$('#tr-map-wrapper').hide();
+            //alert("Place not found on Map.");
+          }
+        });
+
+          // var marker = new google.maps.Marker({
+          //     position: myLatlng,
+          //     map: map,
+          //     title: 'Hello World! \n Good Going!'
+          // });
+      }
+
+      //google.maps.event.addDomListener(window, 'load', drawMap);
+
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('lassets'); ?>
+  <?php echo HTML::script('public/plugins/slimScroll/jquery.slimscroll.min.js', array('type' => 'text/javascript')); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('lscripts'); ?>
+<!--for local scripts-->
+  $(document).ready(function() {
+
+    //$('#location-scroll').slimScroll({
+    //  height: '475px',
+    //  alwaysVisible: 'true'
+    //});
+
+    $("#frmRecord1").validationEngine({
+      promptPosition: "topLeft",
+      onValidationComplete: function(frm, res) {
+        return res;
+      }
+    });
+
+    $(document).on('click', '.loc-list-item', function() {
+      $('.loc-list-item').removeClass('selected');
+      $(this).addClass('selected');
+      $('#tbl-loc-detail-data').css('opacity', '0.2');
+      $('#loc-det-loader').show();
+      getLocationDetails($(this).data('rid'));
+    });
+
+    $(document).on('click', '#refresh-list', function(e) {
+      e.preventDefault();
+      $('#td-location-list').css('opacity', '0.2');
+      $('#loc-list-loader').show();
+
+      var url = "<?php echo URL::to('device/performancelist/'.$record->device_key); ?>";
+      $.get(url, {}, function(data, status) {
+
+        if(data=='NOTLOGGEDIN') {
+          window.location.href = "<?php echo URL::to('login'); ?>";
+          return false;
+        }
+
+        $('#td-location-list').html(data);
+
+        $('.loc-list-item:first').click();
+
+        $('#loc-list-loader').hide();
+        $('#td-location-list').css('opacity', '1');
+      }, "html");
+
+    });
+
+    $('.loc-list-item:first').click();
+
+  });
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Device Details <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- user details -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Device Information</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <!-- text input -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Device Name</label>
+                <span class="form-control"><?php echo $record->device_name; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>OS Type</label>
+                <span class="form-control"><?php echo ucwords($record->os_type); ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Group ID</label>
+                <span class="form-control"><?php echo $record->group_id; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>App Name</label>
+                <span class="form-control"><?php echo $record->app_name; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Registered Since</label>
+                <span class="form-control"><?php echo $record->created_at_us_format; ?></span>
+              </div>
+            </div>
+
+            <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /user details -->
+
+      <!-- device information -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Configuration Information</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+
+          <?php if($record->configuration): ?>
+            <?php $conf = $record->configuration; ?>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Brand</label>
+                <span class="form-control"><?php echo $conf->brand; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>IP Address</label>
+                <span class="form-control"><?php echo $conf->ip_address; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Model No.</label>
+                <span class="form-control"><?php echo $conf->model_no; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>OS Version</label>
+                <span class="form-control"><?php echo $conf->os_version; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Device Memory</label>
+                <span class="form-control"><?php echo $conf->device_memory; ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>IP Assigned by</label>
+                <span class="form-control"><?php echo ucwords($conf->ip_assigned_by); ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>SD Card Installed</label>
+                <span class="form-control"><?php echo ucwords($conf->sd_card_installed); ?></span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>SD Memory</label>
+                <span class="form-control"><?php echo $conf->sd_memory; ?></span>
+              </div>
+            </div>
+
+
+            <?php if($record->sensor): ?>
+              <?php $sens = $record->sensor; ?>
+
+              <div class="clr"></div>
+          </div> <!-- /.box-body -->
+
+            <div class="box-header with-border">
+              <h3 class="box-title">Installed Sensors</h3>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Wifi', 'has_wifi'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Camera', 'has_camera'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Ethernet Nic', 'has_ethernet_nic'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Temperature', 'has_temperature'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('GPS', 'has_gps'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Bluetooth', 'has_bluetooth'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('XRF', 'has_zigbee'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Cellular Modem', 'has_cellular_modem'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyPhoneNumber('Phone Number', 'has_phone_number'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Accelerometer', 'has_accelerometer'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Water Detection', 'has_water_detection'); ?></div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group"><?php echo $sens->beautifyBoolean('Other', 'has_other_sensors'); ?></div>
+              </div>
+
+            <?php endif; ?>
+
+          <?php else: ?>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>No Configuration Information found.</label>
+              </div>
+            </div>
+          <?php endif; ?>
+
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /device information -->
+
+      <!-- location information -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Performance Information</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+
+          <?php if($performances && count($performances)>0): ?>
+
+            <!-- location item list -->
+            <div class="col-md-6">
+              <div id="td-location-list">
+                <table class="table table-bordered table-striped no-margin">
+                  <caption><b>List &nbsp; <span id="refresh-list" class="fa fa-refresh icon-action" title="Refresh"></span></b></caption>
+                  <tr>
+                    <th width="20%">#</th>
+                    <th width="45%">Date Time</th>
+                    <th width="35%" align="center">Network?</th>
+                  </tr>
+                </table>
+
+                <div id="location-scroll">
+
+                  <table class="table table-bordered table-striped table-hover no-margin" id="tblloc-list">
+
+                    <?php $k = 1; ?>
+                    <?php foreach($performances as $per): ?>
+                      <tr data-rid="<?php echo $per->rec_id; ?>" class="loc-list-item" title="View Details">
+                        <td width="20%"><?php echo $k; ?></td>
+                        <td width="45%"><?php echo $per->dt_time_us_format; ?></td>
+                        <td width="35%" align="center"><?php echo ucwords($per->network_connected); ?></td>
+                      </tr>
+                    <?php $k++; ?>
+                    <?php endforeach; ?>
+
+                  </table>
+                </div>
+              </div>
+
+              <div class="overlay" id="loc-list-loader" style="display:none;">
+                <i class="fa fa-spinner fa-spin"></i>
+              </div>
+
+            </div><!-- /location item list -->
+
+            <!-- location item detail -->
+            <div class="col-md-6">
+
+
+              <?php $fPer = $performances->first(); ?>
+              <div id="location-details">
+                <table id="tbl-loc-detail-data" class="table table-bordered table-striped">
+
+                  <caption><b>Performance Details</b></caption>
+                  <?php if($fPer): ?>
+
+                    <tr>
+                      <td width="45%"><b>Network Connected:</b></td>
+                      <td><?php echo ucwords($fPer->network_connected); ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Date Time:</b></td>
+                      <td><?php echo $fPer->dt_time_us_format; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Battery Level:</b></td>
+                      <td><?php echo $fPer->battery_level; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>CPU Util:</b></td>
+                      <td><?php echo $fPer->cpu_util; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Data Uploaded:</b></td>
+                      <td><?php echo $fPer->data_uploaded; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Data Downloaded:</b></td>
+                      <td><?php echo $fPer->data_downloaded; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Memory Util:</b></td>
+                      <td><?php echo $fPer->memory_util; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Signal Strength:</b></td>
+                      <td><?php echo $fPer->signal_strength; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>SD Card Util:</b></td>
+                      <td><?php echo $fPer->sd_card_util; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Temperature:</b></td>
+                      <td><?php echo $fPer->temperature; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Water Detected:</b></td>
+                      <td><?php echo $fPer->water_detected; ?></td>
+                    </tr>
+                    <tr>
+                      <td><b>Uptime:</b></td>
+                      <td><?php echo $fPer->uptime; ?></td>
+                    </tr>
+
+                    <?php if($fPer->latitude && $fPer->longitude): ?>
+                      <tr id="tr-map-wrapper" style="display:none;">
+                        <td colspan="2" style="padding: 0px !important;">
+                          <input type="hidden" id="ltln" value="<?php echo $fPer->latitude . ',' . $fPer->longitude; ?>" />
+                          <br />
+                          <div id="map-canvas"><?php echo $fPer->latitude . ',' . $fPer->longitude; ?></div>
+                        </td>
+                      </tr>
+                    <?php endif; ?>
+                  <?php else: ?>
+                    <tr>
+                      <td><b>No Performance Detail Information found.</b></td>
+                    </tr>
+                  <?php endif; ?>
+                </table>
+              </div>
+
+              <div class="overlay" id="loc-det-loader" style="display:none;">
+                <i class="fa fa-spinner fa-spin"></i>
+              </div>
+
+            </div><!-- location item detail -->
+
+
+          <?php else: ?>
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>No Performance Information found.</label>
+              </div>
+            </div>
+
+          <?php endif; ?>
+          <div class="clr"></div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+      <!-- /location information -->
+
+
+
+      <div class="box">
+        <div class="box-body">
+
+            <div class="box-footer no-border" style="padding: 10px 15px;">
+              <input value=" Back " name="btnBack" class="btn" type="button" onclick="window.location.href='<?php echo URL::to($backuri); ?>'" />
+            </div>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

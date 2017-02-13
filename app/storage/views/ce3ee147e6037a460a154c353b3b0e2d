@@ -1,0 +1,158 @@
+<!-- set counter -->
+<?php $ckounter = 0; ?>
+
+<!-- loop for all features -->
+<?php foreach($records as $r): ?>
+
+  <?php $fld  = $r->ft_data_type == 'Text' ? 'varvalue' : 'decvalue'; ?>
+  <?php $fld2 = $r->ft_data_type == 'Text' ? 'varvalue2' : 'decvalue2'; ?>
+
+  <!-- if range -->
+  <?php if( $r->ft_type == 'Range' ): ?>
+
+    <div class="clr"></div>
+
+    <div class="col-md-12"><h4><?php echo $r->ft_label; ?> <small>(enter range)</small></h4></div>
+    <?php echo Form::hidden('vmfkeys['.$r->ft_fld_name.']', $r->_id ); ?>
+
+    <br/>
+    <br/>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Start &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::text( 'vmf['.$r->ft_fld_name.']['.$fld.']' , $r->{$fld}, [ 'id' => 'start_'.$r->ft_fld_name, 'placeholder' => 'Start '.$r->ft_label, 'class' => 'form-control' ]); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.']['.$fld.']'; ?>" class="validation-error hideme"></span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>End &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::text( 'vmf['.$r->ft_fld_name.']['.$fld2.']' , $r->{$fld2}, [ 'id' => 'end_'.$r->ft_fld_name, 'placeholder' => 'End '.$r->ft_label, 'class' => 'form-control' ]); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.']['.$fld2.']'; ?>" class="validation-error hideme"></span>
+      </div>
+    </div>
+
+    <?php $ckounter = 2; ?>
+
+  <?php endif; ?>
+  <!-- / if range -->
+
+  <!-- if ip range -->
+  <?php if( $r->ft_type == 'IP Range' ): ?>
+
+    <?php $fld  = 'decvalue'; ?>
+    <?php $fld2 = 'decvalue2'; ?>
+
+    <div class="clr"></div>
+
+    <div class="col-md-12"><h4><?php echo $r->ft_label; ?> <small>(enter range)</small></h4></div>
+    <?php echo Form::hidden('vmfkeys['.$r->ft_fld_name.']', $r->_id ); ?>
+
+    <br/>
+    <br/>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Start &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::text( 'vmf['.$r->ft_fld_name.']['.$fld.']' , $r->{$fld}, [ 'id' => 'start_'.$r->ft_fld_name, 'placeholder' => 'Start '.$r->ft_label, 'class' => 'form-control' ]); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.']['.$fld.']'; ?>" class="validation-error hideme"></span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>End &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::text( 'vmf['.$r->ft_fld_name.']['.$fld2.']' , $r->{$fld2}, [ 'id' => 'end_'.$r->ft_fld_name, 'placeholder' => 'End '.$r->ft_label, 'class' => 'form-control' ]); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.']['.$fld2.']'; ?>" class="validation-error hideme"></span>
+      </div>
+    </div>
+
+    <?php $ckounter = 2; ?>
+
+  <?php endif; ?>
+  <!-- / if ip range -->
+
+  <!-- if text-box -->
+  <?php if( $r->ft_type == 'Text-box' ): ?>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label><?php echo $r->ft_label; ?> &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::text( 'vmf['.$r->ft_fld_name.']['.$fld.']' , $r->{$fld}, [ 'id' => $r->ft_fld_name, 'placeholder' => $r->ft_label, 'class' => 'form-control' ]); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.']['.$fld.']'; ?>" class="validation-error hideme"></span>
+          <?php echo Form::hidden('vmfkeys['.$r->ft_fld_name.']', $r->_id ); ?>
+
+      </div>
+    </div>
+    <?php $ckounter++; ?>
+  <?php endif; ?>
+  <!-- / if text-box -->
+
+  <!-- if ip -->
+  <?php if( $r->ft_type == 'IP' ): ?>
+
+    <?php $fld  = 'decvalue'; ?>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label><?php echo $r->ft_label; ?> &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::text( 'vmf['.$r->ft_fld_name.']['.$fld.']' , $r->{$fld}, [ 'id' => $r->ft_fld_name, 'placeholder' => $r->ft_label, 'class' => 'form-control' ]); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.']['.$fld.']'; ?>" class="validation-error hideme"></span>
+          <?php echo Form::hidden('vmfkeys['.$r->ft_fld_name.']', $r->_id ); ?>
+
+      </div>
+    </div>
+    <?php $ckounter++; ?>
+  <?php endif; ?>
+  <!-- / if ip -->
+
+  <!-- if drop-down -->
+  <?php if( $r->ft_type == 'Drop-down' ): ?>
+
+    <?php $options = explode(",", $r->ft_values); ?>
+    <?php $options = array_combine($options, $options) ; ?>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label><?php echo $r->ft_label; ?> &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::select( 'vmf['.$r->ft_fld_name.']['.$fld.']' , $options, $r->{$fld}, [ 'id' => $r->ft_fld_name, 'class' => 'form-control' ] ); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.']['.$fld.']'; ?>" class="validation-error hideme"></span>
+          <?php echo Form::hidden('vmfkeys['.$r->ft_fld_name.']', $r->_id ); ?>
+
+      </div>
+    </div>
+    <?php $ckounter++; ?>
+  <?php endif; ?>
+  <!-- / if drop-down -->
+
+  <!-- if text-area -->
+  <?php if( $r->ft_type == 'Text-area' ): ?>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label><?php echo $r->ft_label; ?> &nbsp; <small><span class="fa fa-star red"></span></small></label>
+          <?php echo Form::textarea( 'vmf['.$r->ft_fld_name.'][txtvalue]' , $r->{$fld}, [ 'id' => $r->ft_fld_name, 'rows' => '3', 'placeholder' => $r->ft_label, 'class' => 'form-control' ]); ?>
+
+          <span name="emsg-<?php echo 'vmf['.$r->ft_fld_name.'][txtvalue]'; ?>" class="validation-error hideme"></span>
+          <?php echo Form::hidden('vmfkeys['.$r->ft_fld_name.']', $r->_id ); ?>
+
+      </div>
+    </div>
+    <?php $ckounter = 2; ?>
+  <?php endif; ?>
+  <!-- / if text-area -->
+
+
+  <?php if($ckounter % 2 == 0): ?>
+    <div class="clr"></div>
+  <?php endif; ?>
+
+<?php endforeach; ?>
+<!-- / loop for all features -->

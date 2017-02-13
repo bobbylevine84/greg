@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body style="padding:10px; margin:0; border:0;">
+<table width="728" cellspacing="0" border="0" align="center" style="font-size:14px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#252525;">
+  <tr><td colspan="4" style="padding:0 10px; border-top: 3px solid #C9252C; line-height:3px;">&nbsp;</td></tr>
+  <tr>
+    <td colspan="4" style="background-color:#ffffff; color:#C9252C; font-size:20px; line-height:40px;">
+      <img width="128" src="{{ asset('public/dist/img/custom/logo.png') }}"/>
+    </td>
+  </tr>
+  <tr><td colspan="4" style="padding:0 10px; border-top: 1px solid #eee;">&nbsp;</td></tr>
+
+  <tr>
+    <td width="30" style="padding:0 10px;">&nbsp;</td>
+    <td width="250">&nbsp;</td>
+    <td width="75">&nbsp;</td>
+    <td style="padding:0 10px;">&nbsp;</td>
+  </tr>
+
+  <tr><td colspan="4" style="padding:0 10px;">Hello {{ $repname }},</td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+
+  <tr>
+    <td colspan="4" style="padding:0 10px;text-indent:50px;">
+      {{ $openingline }}
+      Please click on this <a target="_blank" href="{{ route('lead.open', [ $lid ]) }}">link</a> to login and review. 
+      The details are listed below.
+    </td>
+  </tr>
+  <tr><td colspan="4" style="padding:0 10px;"></td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px;"><b>Lead Company Name:</b> {{ $record->comp_name }}</td></tr>
+<tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;"><b>Lead Company Address:</b> {{ $record->comp_address }}</td></tr>
+<tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;"><b>Lead Company City:</b> {{ $record->comp_city }}</td></tr>
+<tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;"><b>Lead Company State:</b> {{ $record->comp_state }}</td></tr>
+<tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;"><b>Lead Contact Name:</b> {{ $record->con_name }}</td></tr>
+<tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;"><b>Lead Project Name:</b> {{ $record->proj_name }}</td></tr>
+<tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;"><b>Lead Product:</b> {{ $record->productnamescsv }}</td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+
+<!--   <tr>
+    <td colspan="4" style="padding:0 10px; text-indent:50px;">
+      Please change your password once you’ve logged in. 
+      If you have any questions, please contact your Account Rep that is cc’d on this email or contact us at:
+    </td>
+  </tr>
+ -->
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px; font-weight: bold; font-size: 26px;">E2E Customer Service, Orders, and Account Receivables</td></tr>
+
+  <tr>
+    <td colspan="2" style="padding:0 10px;">End 2 End Technologies HQ</td>
+    <td>&nbsp;</td>
+    <td style="padding:0 10px;">End 2 End Technologies Warehouse</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding:0 10px;">60 Sycamore Street West</td>
+    <td>&nbsp;</td>
+    <td style="padding:0 10px;">1017 South Kansas Avenue</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding:0 10px;">St. Paul, MN  55117</td>
+    <td>&nbsp;</td>
+    <td style="padding:0 10px;">Liberal, Kansas 67901</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding:0 10px;"><a href="http://www.e2etechinc.com" target="_blank">http://www.e2etechinc.com</a></td>
+    <td>&nbsp;</td>
+    <td style="padding:0 10px;"><a href="mailto:orders@e2etechinc.com" target="_blank">orders@e2etechinc.com</a></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="padding:0 10px;">Phone: 651-560-0321</td>
+    <td>&nbsp;</td>
+    <td style="padding:0 10px;">&nbsp;</td>
+  </tr>
+
+
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px;">Regards,</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;">E2E TECHNOLOGIES</td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+  <tr><td colspan="4" style="padding:0 10px;">&nbsp;</td></tr>
+
+  <tr><td colspan="4" style="padding:0 10px; border-top: 3px solid #C9252C; line-height:3px;">&nbsp;</td></tr>
+
+</table>
+</body>
+</html>

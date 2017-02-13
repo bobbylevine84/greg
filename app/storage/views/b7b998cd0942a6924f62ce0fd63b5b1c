@@ -1,0 +1,167 @@
+<!-- Inside Sales Menu -->
+<?php if($myApp->utype == 'INTSALES'): ?>
+
+  <!-- Account Rep -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('accountrep.index')); ?>">
+      <i class="fa fa-male"></i> <span>Account Rep</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('accountrep.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('accountrep.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- VAR Account -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('varacc.index')); ?>">
+      <i class="fa fa-users"></i> <span>VAR Accounts</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('varacc.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('varacc.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+      <li><a href="<?php echo e(URL::route('varacc.createsite')); ?>"><i class="fa fa-plus"></i> Create Site</a></li>
+    </ul>
+  </li>
+
+  <!-- Account On-boarding -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('onboarding.index')); ?>">
+      <i class="fa fa-users"></i> <span>On-Boarding</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('onboarding.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+    </ul>
+  </li>
+
+  <!-- Leads -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('lead.index')); ?>">
+      <i class="fa fa-share"></i> <span>Lead Registration</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+  </li>
+
+<?php endif; ?>
+<!-- /.Inside Sales Menu -->
+
+<!-- Acc Rep Menu -->
+<?php if($myApp->utype == 'ACCREP'): ?>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('accountrep.myaccount')); ?>">
+      <i class="fa fa-sign-in"></i> <span>My Account</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+  <!-- VAR Account -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('varacc.index')); ?>">
+      <i class="fa fa-users"></i> <span>VAR Accounts</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('varacc.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+    </ul>
+  </li>
+
+  <!-- Leads -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('lead.index')); ?>">
+      <i class="fa fa-share"></i> <span>Lead Registration</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+  </li>
+
+<?php endif; ?>
+<!-- /.Account Rep Menu -->
+
+<!-- VAR Acc Menu -->
+<?php if($myApp->utype == 'VARACC'): ?>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('varacc.myaccount')); ?>">
+      <i class="fa fa-sign-in"></i> <span>My Account</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+  <li class="active">
+    <a href="<?php echo e(URL::route('onboarding.open')); ?>">
+      <i class="fa fa-info-circle"></i> <span>Account On-Boarding</span>
+      <i class="fa pull-right"></i>
+    </a>
+  </li>
+
+  <!-- Leads -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('lead.index')); ?>">
+      <i class="fa fa-share"></i> <span>Lead Registration</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('lead.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('lead.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+<?php endif; ?>
+<!-- /.VAR Acc Rep Menu -->
+
+<!-- Superadmin Menu -->
+<?php if($myApp->isSU): ?>
+
+  <!-- Account Rep -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('accountrep.index')); ?>">
+      <i class="fa fa-male"></i> <span>Account Rep</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('accountrep.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('accountrep.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+  <!-- VAR Account -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('varacc.index')); ?>">
+      <i class="fa fa-users"></i> <span>VAR Accounts</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('varacc.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('varacc.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+      <li><a href="<?php echo e(URL::route('varacc.createsite')); ?>"><i class="fa fa-plus"></i> Create Site</a></li>
+    </ul>
+  </li>
+
+  <!-- Account On-boarding -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('onboarding.index')); ?>">
+      <i class="fa fa-users"></i> <span>On-Boarding</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('onboarding.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+    </ul>
+  </li>
+
+  <!-- Leads -->
+  <li class="treeview active">
+    <a href="<?php echo e(URL::route('lead.index')); ?>">
+      <i class="fa fa-share"></i> <span>Lead Registration</span>
+      <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+      <li><a href="<?php echo e(URL::route('lead.index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+      <li><a href="<?php echo e(URL::route('lead.create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+    </ul>
+  </li>
+
+<?php endif; ?>
+<!-- /.Superadmin Menu -->

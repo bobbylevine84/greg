@@ -1,0 +1,59 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+  <!-- sidebar menu: : style can be found in sidebar.less -->
+  <ul class="sidebar-menu">
+    <li class="header">MAIN NAVIGATION</li>
+
+    <?php if($myApp->isSU): ?>
+      <li class="treeview active">
+        <a href="<?php echo e(URL::to('group/index')); ?>">
+          <i class="fa fa-users"></i> <span>Groups</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="<?php echo e(URL::to('group/index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+          <li><a href="<?php echo e(URL::to('group/create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview active">
+        <a href="<?php echo e(URL::to('account/index')); ?>">
+          <i class="fa fa-lock"></i> <span>Accounts</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="<?php echo e(URL::to('account/index')); ?>"><i class="fa fa-list-ul"></i> List</a></li>
+          <li><a href="<?php echo e(URL::to('account/create')); ?>"><i class="fa fa-plus"></i> Create</a></li>
+        </ul>
+      </li>
+
+      <li class="active">
+        <a href="<?php echo e(URL::to('appuser/index')); ?>">
+          <i class="fa fa-user"></i> <span>App Users</span>
+          <i class="fa pull-right"></i>
+        </a>
+      </li>
+
+    <!-- else -->
+    <?php else: ?>
+
+      <li class="active">
+        <a href="<?php echo e(URL::to('account/myaccount')); ?>">
+          <i class="fa fa-sign-in"></i> <span>My Account</span>
+          <i class="fa pull-right"></i>
+        </a>
+      </li>
+
+      <li class="active">
+        <a href="<?php echo e(URL::to('appuser/groupusers')); ?>">
+          <i class="fa fa-users"></i> <span>Group Users</span>
+          <i class="fa pull-right"></i>
+        </a>
+      </li>
+
+    <?php endif; ?>
+
+
+  </ul>
+</section>
+<!-- /.sidebar -->

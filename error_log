@@ -1,0 +1,6 @@
+[05-Aug-2015 04:02:52 America/Chicago] PHP Fatal error:  Class 'Customer' not found in /home/susimsamanta/public_html/staging/m2m/app/functions.php on line 64
+[05-Aug-2015 04:03:28 America/Chicago] PHP Fatal error:  Class 'Customer' not found in /home/susimsamanta/public_html/staging/m2m/app/functions.php on line 64
+[05-Aug-2015 04:08:15 America/Chicago] PHP Fatal error:  Call to undefined function getCustomerforAdmin() in /home/susimsamanta/public_html/staging/m2m/app/controllers/BaseController.php on line 18
+[09-Nov-2015 11:30:49 America/Chicago] PHP Fatal error:  Call to undefined function getTheBoss() in /home/susimsamanta/public_html/staging/m2m/app/controllers/RadioInventoryController.php on line 79
+[09-Nov-2015 11:31:27 America/Chicago] PHP Fatal error:  Call to undefined function getTheBoss() in /home/susimsamanta/public_html/staging/m2m/app/controllers/RadioInventoryController.php on line 79
+[09-Nov-2015 11:32:40 America/Chicago] PHP Fatal error:  Call to undefined function getTheBoss() in /home/susimsamanta/public_html/staging/m2m/app/controllers/RadioInventoryController.php on line 79

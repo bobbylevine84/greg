@@ -1,0 +1,11 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+  <!-- sidebar menu: : style can be found in sidebar.less -->
+  <ul class="sidebar-menu">
+    <li class="header"><?php echo VERSION; ?></li><!-- dynamic version text pulled from settings -->
+
+      <?php echo $__env->make('includes.app.side_menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  </ul>
+</section>
+<!-- /.sidebar -->

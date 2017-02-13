@@ -1,0 +1,99 @@
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Fan App <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Search</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <?php echo Form::open( array('id' => 'frmSrch', 'route' => 'fanapp.index', 'method' => 'post') ); ?>
+
+            <!-- text input -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>App ID/App Name</label>
+                <input name="srchText" type="text" class="form-control" placeholder="App ID/App Name"  value="<?php echo show($params, 'srchText'); ?>"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>App ID</label>
+                <input name="srchAppID" type="text" class="form-control" placeholder="App ID"  value="<?php echo show($params, 'srchAppID'); ?>"/>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>App Name</label>
+                <input name="srchAppName" type="text" class="form-control" placeholder="App Name"  value="<?php echo show($params, 'srchAppName'); ?>"/>
+              </div>
+            </div>
+
+            <div class="box-footer" style="padding: 10px 15px;">
+              <input value="  Search  " name="btnSearch" class="btn btn-primary" type="submit" /> &nbsp; 
+              <input value="  Clear  " name="btnClear" class="btn bg-gray" type="submit" />
+
+              <input value="Add New" name="btnAdd" class="btn btn-success pull-right" type="button" onclick="window.location.href='<?php echo URL::route('fanapp.create'); ?>'" />
+            </div>
+
+          <?php echo Form::close(); ?>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+      <!-- /search form -->
+
+      <!-- list table -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">List</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th width="30%">App ID</th>
+              <th width="60%">App Name</th>
+              <th width="10%">Action</th>
+            </tr>
+
+            <?php foreach($records as $k => $r): ?>
+            <tr>
+              <td><?php echo $r->app_id; ?></td>
+              <td><?php echo $r->app_name; ?></td>
+              <td>
+                <span class="glyphicon glyphicon-edit icon-action lblue" onclick="window.location.href='<?php echo URL::route('fanapp.edit', $r->app_id); ?>'" title="Edit"></span> &nbsp; &nbsp; 
+                <span class="glyphicon glyphicon-trash icon-action red" onclick="javascript:confirmAction('<?php echo URL::route('fanapp.destroy', $r->app_id); ?>', 'Delete this record?')" title="Delete"></span>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+
+          </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <div class="pagination pagination-sm no-margin pull-right">
+            <?php echo $records->links(); ?>
+
+          </div>
+        </div>
+      </div><!-- /.box / list table -->
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

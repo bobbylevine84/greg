@@ -1,0 +1,120 @@
+<?php $__env->startSection('content'); ?>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1> Radio Inventory <small></small> </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+  <?php echo $__env->make('includes.app.formsubmitalerts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- search form -->
+      <!-- general form elements disabled -->
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Search</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <?php echo Form::open( array('id' => 'frmSrch', 'route' => 'report.radioinventory', 'method' => 'post') ); ?>
+
+
+            <!-- text input -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Vendor</label>
+                <select name="srchRIVendor" class="form-control">
+                  <option value="">Select Vendor</option>
+                  <?php foreach($vendors as $id => $nm): ?>
+                    <option value="<?php echo $id; ?>" <?php if(show($params, 'srchRIVendor')==$id) echo 'selected'; ?>><?php echo $nm; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Model</label>
+                <select name="srchRIModel" class="form-control">
+                  <option value="">Select Model</option>
+                  <?php foreach($models as $id => $nm): ?>
+                    <option value="<?php echo $id; ?>" <?php if(show($params, 'srchRIModel')==$id) echo 'selected'; ?>><?php echo $nm; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Status</label>
+                <select name="srchRIStatus" class="form-control">
+                  <option value="">Select Status</option>
+                  <?php foreach($statuses as $id => $nm): ?>
+                    <option value="<?php echo $id; ?>" <?php if(show($params, 'srchRIStatus')==$id) echo 'selected'; ?>><?php echo $nm; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="clr"></div>
+
+            <div class="box-footer" style="padding: 10px 15px;">
+              <input value="  Search  " id="btnSearch" name="btnSearch" class="btn btn-primary" type="submit" /> &nbsp; 
+              <input value="  Clear  " name="btnClear" class="btn bg-gray" type="submit" />
+              <input type="hidden" id="srchOBy" name="srchOBy" value="<?php echo show($params, 'srchOBy'); ?>" />
+              <input type="hidden" id="srchOTp" name="srchOTp" value="<?php echo show($params, 'srchOTp'); ?>" />
+
+            </div>
+
+          <?php echo Form::close(); ?>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+      <!-- /search form -->
+
+      <!-- list table -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">List </h3> <span class="e2e">(<?php echo $records->getFrom(); ?> to <?php echo $records->getTo(); ?> of <?php echo $records->getTotal(); ?>)</span>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th width="30%" class="orderable" data-field="tbl_vendor.vendor_name">Vendor Name</th>
+              <th width="30%" class="orderable" data-field="tbl_vendor_model.model_name">Model Name</th>
+              <th width="25%" class="orderable" data-field="tbl_radio_inventory.sku">Serial No</th>
+              <th width="15%" class="orderable" data-field="tbl_radio_inventory.status">Status</th>
+            </tr>
+
+            <?php foreach($records as $k => $r): ?>
+            <tr>
+              <td><?php echo $r->vendor_name; ?></td>
+              <td><?php echo $r->model_name; ?></td>
+              <td><?php echo $r->sku; ?></td>
+              <td><?php echo $r->status; ?></td>
+            </tr>
+            <?php endforeach; ?>
+
+          </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <div class="pagination pagination-sm no-margin pull-right">
+            <?php echo $records->links(); ?>
+
+          </div>
+        </div>
+      </div><!-- /.box / list table -->
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
+
+
+</section><!-- /.content -->
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
